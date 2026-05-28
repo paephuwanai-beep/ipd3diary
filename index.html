@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPD3 diary Plus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* Glassmorphism Classes */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation / Header */
+        header { padding: 15px; text-align: center; margin-bottom: 20px; }
+        .logo { font-size: 24px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .logo span { color: #00e5ff; }
+        
+        .nav-menu {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px;
+            margin: 0 15px 20px 15px;
+            white-space: nowrap;
+        }
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .nav-btn.active, .nav-btn:hover { background: #00e5ff; color: #000; font-weight: bold; }
+
+        /* Content Area */
+        .content-section { display: none; padding: 0 15px; padding-bottom: 50px; }
+        .content-section.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Form Elements */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; color: #b2ebf2; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.8);
+            color: #000;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        /* Highlight Stats */
+        .stat-box { background: rgba(0, 229, 255, 0.2); border: 1px solid #00e5ff; padding: 15px; border-radius: 8px; text-align: center; }
+        .stat-number { font-size: 24px; font-weight: bold; color: #00e5ff; }
+
+        /* Blink Text */
+        .blink { animation: blinker 1.5s linear infinite; color: #ff80ab; font-weight: bold; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Button */
+        .btn-submit { background: linear-gradient(45deg, #00e5ff, #00b0ff); color: #000; border: none; padding: 15px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px;}
+
+    </style>
+</head>
+<body>
+
+    <header class="glass">
+        <div class="logo">IPD3 diary <span>Plus+</span></div>
+        <p style="font-size: 12px; margin-top: 5px;" class="blink">" ขอบคุณที่ทำงานหนัก "</p>
+        <p style="font-size: 10px; opacity: 0.8;">เรา คือ มาตรฐาน สร้างสรรงานด้วย AI ถึงใจ สุดพลัง ความหวังของเหล่าท่านชาย</p>
+    </header>
+
+    <nav class="nav-menu glass">
+        <button class="nav-btn active" onclick="showTab('home')">1. HOME</button>
+        <button class="nav-btn" onclick="showTab('record')">2. บันทึกเหตุการณ์</button>
+        <button class="nav-btn" onclick="showTab('history')">3. ประวัติ</button>
+        <button class="nav-btn" onclick="showTab('risk')">4. ความเสี่ยง</button>
+        <button class="nav-btn" onclick="showTab('report')">5. ออกรายงาน</button>
+        <button class="nav-btn" onclick="window.open('#', '_blank')">6. ฐานข้อมูล</button>
+    </nav>
+
+    <section id="home" class="content-section active glass">
+        <h3>Dashboard ภาพรวม</h3>
+        <p style="font-size: 12px; margin-bottom: 15px;">(ส่วนนี้จะนำกราฟและ Interactive Cards 4 อย่างมาใส่ตามที่คุณพยาบาลรีเควสครับ)</p>
+        </section>
+
+    <section id="record" class="content-section glass">
+        <h3 style="margin-bottom: 15px; color: #00e5ff;">บันทึกเวรประจำวัน</h3>
+        
+        <div class="grid-2 form-group">
+            <div><label>วันที่</label><input type="date" id="dateInput"></div>
+            <div><label>เวร</label>
+                <select id="shift">
+                    <option value="ดึก">ดึก (00:00 - 08:00)</option>
+                    <option value="เช้า">เช้า (08:00 - 16:00)</option>
+                    <option value="บ่าย">บ่าย (16:00 - 24:00)</option>
+                </select>
+            </div>
+        </div>
+
+        <hr style="border: 0.5px solid rgba(255,255,255,0.2); margin: 15px 0;">
+
+        <h4 style="margin-bottom: 10px;">ข้อมูลผู้ป่วย (ราย)</h4>
+        <div class="grid-2 form-group">
+            <div><label>ยอดยกมา</label><input type="number" id="fwd" value="0" oninput="calculateStats()"></div>
+            <div><label>รับใหม่</label><input type="number" id="new_admit" value="0" oninput="calculateStats()"></div>
+            <div><label>รับย้าย</label><input type="number" id="transfer_in" value="0" oninput="calculateStats()"></div>
+            <div style="grid-column: span 2;">
+                <label style="color: #ff80ab;">หักออก (จำหน่าย + ย้ายไป + ไม่สมัครใจ + Refer + ตาย)</label>
+                <input type="number" id="total_out" value="0" oninput="calculateStats()" placeholder="รวมยอดหักออกทั้งหมด">
+            </div>
+        </div>
+
+        <div class="stat-box form-group">
+            <label style="color: #000;">ยอดคงพยาบาลสุทธิ</label>
+            <div class="stat-number" id="remaining_display">0</div>
+            <input type="hidden" id="remaining_val" value="0">
+        </div>
+
+        <h4 style="margin-bottom: 10px;">แยกตามประเภท (ต้องรวมให้ได้ <span id="target_sum" style="color:#00e5ff;">0</span>)</h4>
+        <div class="grid-2 form-group">
+            <div><label>ประเภท 1</label><input type="number" id="type1" value="0" oninput="checkTypeSum()"></div>
+            <div><label>ประเภท 2</label><input type="number" id="type2" value="0" oninput="checkTypeSum()"></div>
+            <div><label>ประเภท 3</label><input type="number" id="type3" value="0" oninput="checkTypeSum()"></div>
+            <div><label>ประเภท 4</label><input type="number" id="type4" value="0" oninput="checkTypeSum()"></div>
+        </div>
+        <p id="type_warning" style="color: #ff80ab; font-size: 12px; display: none;">* ยอดรวมประเภทไม่ตรงกับยอดคงพยาบาล!</p>
+
+        <hr style="border: 0.5px solid rgba(255,255,255,0.2); margin: 15px 0;">
+        
+        <h4 style="margin-bottom: 10px;">เจ้าหน้าที่ขึ้นเวร</h4>
+        <div class="form-group">
+            <label>พยาบาลคนที่ 1 (บังคับ)</label>
+            <select required><option>ปราณี RN</option><option>สมหญิง RN</option></select>
+        </div>
+        <div class="form-group">
+            <label>พยาบาลคนที่ 2 (บังคับ)</label>
+            <select required><option>พิเชษฐ์ RN</option><option>สมชาย RN</option></select>
+        </div>
+        <div class="form-group">
+            <label>ผู้ช่วยเหลือคนไข้ 1 (บังคับ)</label>
+            <select required><option>ทวีศักดิ์ NA</option></select>
+        </div>
+
+        <button class="btn-submit" onclick="submitRecord()">บันทึกข้อมูล (Save & Generate PDF)</button>
+    </section>
+
+    <section id="history" class="content-section glass"><h3>ประวัติการบันทึก</h3><p>ระบบจะเรียงข้อมูล ดึก > เช้า > บ่าย ให้ที่นี่ครับ</p></section>
+    <section id="risk" class="content-section glass">
+        <h3>รายงานความเสี่ยง</h3>
+        <a href="https://kshpt.thai-nrls.org/" target="_blank" style="color: #00e5ff;">คลิกที่นี่เพื่อไปเว็บไซต์ NRLS</a>
+        <div style="margin-top: 20px; padding: 15px; border: 1px dashed rgba(255,255,255,0.5); border-radius: 8px;">
+            <p>(พื้นที่สำหรับ Interactive Infographic ระดับความเสี่ยง A-I)</p>
+        </div>
+    </section>
+    <section id="report" class="content-section glass"><h3>ออกรายงาน</h3><p>เลือกช่วงวันที่ และ Export PDF/CSV ได้ที่นี่</p></section>
+
+    <script>
+        // Set Today's Date
+        document.getElementById('dateInput').valueAsDate = new Date();
+
+        // Menu Navigation Logic
+        function showTab(tabId) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Math Logic for Patient Stats
+        function calculateStats() {
+            let fwd = parseInt(document.getElementById('fwd').value) || 0;
+            let new_ad = parseInt(document.getElementById('new_admit').value) || 0;
+            let tr_in = parseInt(document.getElementById('transfer_in').value) || 0;
+            let total_out = parseInt(document.getElementById('total_out').value) || 0;
+            
+            let remaining = (fwd + new_ad + tr_in) - total_out;
+            
+            document.getElementById('remaining_display').innerText = remaining;
+            document.getElementById('remaining_val').value = remaining;
+            document.getElementById('target_sum').innerText = remaining;
+            checkTypeSum();
+        }
+
+        // Validation Logic for Types 1-4
+        function checkTypeSum() {
+            let t1 = parseInt(document.getElementById('type1').value) || 0;
+            let t2 = parseInt(document.getElementById('type2').value) || 0;
+            let t3 = parseInt(document.getElementById('type3').value) || 0;
+            let t4 = parseInt(document.getElementById('type4').value) || 0;
+            let current_sum = t1 + t2 + t3 + t4;
+            let required_sum = parseInt(document.getElementById('remaining_val').value);
+
+            let warning = document.getElementById('type_warning');
+            if (current_sum !== required_sum) {
+                warning.style.display = 'block';
+                warning.innerText = `* ยอดรวมประเภท (${current_sum}) ไม่ตรงกับยอดคงพยาบาล (${required_sum})!`;
+            } else {
+                warning.style.display = 'none';
+            }
+        }
+
+        function submitRecord() {
+            alert("ฟังก์ชันนี้จะทำการส่งข้อมูลไปยัง Google Sheets และแคปหน้าจอเป็น PDF/JPEG ต่อไปครับ!");
+        }
+    </script>
+</body>
+</html>
