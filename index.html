@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3233/3233481.png">
     
-    <title>IPD3 Diary Plus+</title>
+    <title>IPD3 diary Plus+</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -15,128 +15,103 @@
 
     <style>
         :root {
-            --primary-dark: #1A0B2E; 
-            --secondary-dark: #0D111A; 
-            --accent-purple: #9333EA;  
+            --primary-dark: #1E0A3D; 
+            --secondary-dark: #0B0F19; 
+            --accent-purple: #8B5CF6;  
             --panel-bg: #FFFFFF;
             --panel-text: #1E293B;
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --sidebar-width: 280px;
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --sidebar-width: 260px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        body { font-family: 'Sarabun', sans-serif; font-size: 16px; line-height: 1.5; background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); background-attachment: fixed; color: #F8FAFC; min-height: 100vh; display: flex; }
+        /* เปลี่ยนเป็น TH Sarabun ทั้งหมด */
+        body { font-family: 'Sarabun', sans-serif; font-size: 16px; background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%); background-attachment: fixed; color: #F8FAFC; min-height: 100vh; display: flex; }
         .prompt-text { font-family: 'Prompt', sans-serif; }
 
-        .shimmer-logo {
-            font-family: 'Prompt', sans-serif; font-size: 32px; font-weight: 700;
-            background: linear-gradient(90deg, #D8B4FE 0%, #FFFFFF 50%, #D8B4FE 100%);
-            background-size: 200% auto; color: transparent;
-            -webkit-background-clip: text; background-clip: text;
-            animation: shimmer 3s linear infinite; margin-bottom: 5px;
-        }
-        @keyframes shimmer { to { background-position: 200% center; } }
-
-        .blinking-smooth { animation: blinker 2s ease-in-out infinite; color: #E9D5FF; font-weight: 600; letter-spacing: 1px;}
-        @keyframes blinker { 50% { opacity: 0.4; } }
-
-        /* SIDEBAR */
-        .sidebar { width: var(--sidebar-width); background: rgba(11, 15, 25, 0.95); border-right: 1px solid var(--glass-border); height: 100vh; position: fixed; display: flex; flex-direction: column; padding: 30px 20px; z-index: 100; overflow-y: auto; transition: all 0.3s;}
-        .sidebar-logo-container { text-align: center; margin-bottom: 35px; }
-        .sidebar-subtitle { font-size: 15px; font-weight: 400; color: #CBD5E1; font-family: 'Sarabun', sans-serif; line-height: 1.4; margin-top: 5px;}
+        /* SIDEBAR / BOTTOM NAV */
+        .sidebar { width: var(--sidebar-width); background: rgba(11, 15, 25, 0.95); border-right: 1px solid var(--glass-border); height: 100vh; position: fixed; display: flex; flex-direction: column; padding: 30px 15px; z-index: 100; overflow-y: auto; transition: all 0.3s;}
+        .sidebar-logo { text-align: center; margin-bottom: 30px; font-size: 26px; font-weight: 700; color: #C084FC; letter-spacing: 1px;}
+        .sidebar-logo span { color: #FFF; font-weight: 300; }
+        .sidebar-subtitle { font-size: 15px; font-weight: 400; color: #E9D5FF; font-family: 'Sarabun', sans-serif; line-height: 1.3; margin-top: 5px;}
         
-        .nav-link { display: flex; align-items: center; padding: 12px 18px; color: #94A3B8; text-decoration: none; border-radius: 12px; margin-bottom: 8px; transition: all 0.3s; font-weight: 500; cursor: pointer; font-size: 16px; font-family: 'Prompt';}
-        .nav-link i { margin-right: 15px; font-size: 18px; width: 24px; text-align: center; }
-        .nav-link:hover, .nav-link.active { background: linear-gradient(90deg, var(--accent-purple), #6366F1); color: #FFF; box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);}
+        .nav-link { display: flex; align-items: center; padding: 12px 18px; color: #94A3B8; text-decoration: none; border-radius: 12px; margin-bottom: 8px; transition: all 0.3s; font-weight: 500; cursor: pointer; font-size: 18px;}
+        .nav-link i { margin-right: 14px; font-size: 18px; width: 24px; text-align: center; }
+        .nav-link:hover, .nav-link.active { background: linear-gradient(90deg, var(--accent-purple), #6366F1); color: #FFF; }
 
-        .main-content { flex: 1; margin-left: var(--sidebar-width); padding: 35px; width: calc(100% - var(--sidebar-width)); transition: all 0.3s; }
+        .main-content { flex: 1; margin-left: var(--sidebar-width); padding: 30px; width: calc(100% - var(--sidebar-width)); transition: all 0.3s; }
 
         /* MOBILE UI */
         @media (max-width: 992px) {
-            body { padding-bottom: 75px; }
-            .sidebar { flex-direction: row; justify-content: space-around; align-items: center; width: 100%; height: 75px; bottom: 0; top: auto; left: 0; padding: 5px; border-right: none; border-top: 1px solid var(--glass-border); box-shadow: 0 -5px 20px rgba(0,0,0,0.5);}
-            .sidebar-logo-container, .nav-link span, .sidebar hr, .hide-on-mobile { display: none !important; }
+            body { padding-bottom: 70px; }
+            .sidebar { flex-direction: row; justify-content: space-around; align-items: center; width: 100%; height: 70px; bottom: 0; top: auto; left: 0; padding: 5px; border-right: none; border-top: 1px solid var(--glass-border); }
+            .sidebar-logo, .nav-link span, .sidebar hr, .hide-on-mobile { display: none !important; }
             .nav-link { flex-direction: column; padding: 8px; margin: 0; border-radius: 10px; width: 100%; justify-content: center;}
-            .nav-link i { margin: 0; font-size: 24px; margin-bottom: 5px; }
-            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .nav-link i { margin: 0; font-size: 22px; margin-bottom: 4px; }
+            .main-content { margin-left: 0; width: 100%; padding: 15px; }
         }
 
         /* PANELS */
-        .glass-panel { background: var(--panel-bg); color: var(--panel-text); border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
-        .section-title { font-family: 'Prompt', sans-serif; font-size: 18px; color: #4C1D95; background: #F3E8FF; padding: 10px 18px; border-radius: 8px; margin: 30px 0 15px 0; font-weight: 600; border-left: 5px solid var(--accent-purple); display: flex; align-items: center; gap: 10px;}
+        .glass-panel { background: var(--panel-bg); color: var(--panel-text); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .section-title { font-family: 'Sarabun', sans-serif; font-size: 18px; color: #4C1D95; background: #F3E8FF; padding: 8px 16px; border-radius: 8px; margin: 25px 0 15px 0; font-weight: 700; border-left: 4px solid var(--accent-purple); }
 
         /* FORMS */
-        .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 18px; }
-        .form-control { margin-bottom: 12px; }
-        .form-control label { display: block; font-size: 15px; color: #334155; margin-bottom: 6px; font-weight: 600; font-family: 'Sarabun', sans-serif;}
-        .form-control input, .form-control select, .form-control textarea { width: 100%; background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 14px; color: #0F172A; outline: none; font-size: 16px; font-family: 'Sarabun', sans-serif; transition: all 0.3s; }
-        .form-control input:focus, .form-control select:focus, .form-control textarea:focus { border-color: var(--accent-purple); background: #FFFFFF; box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.2); }
+        .data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .form-control { margin-bottom: 10px; }
+        .form-control label { display: block; font-size: 16px; color: #334155; margin-bottom: 4px; font-weight: 600; font-family: 'Sarabun', sans-serif;}
+        .form-control input, .form-control select, .form-control textarea { width: 100%; background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px; color: #0F172A; outline: none; font-size: 16px; font-family: 'Sarabun', sans-serif; transition: all 0.3s; }
+        .form-control input:focus, .form-control select:focus, .form-control textarea:focus { border-color: var(--accent-purple); background: #FFFFFF; box-shadow: 0 0 0 3px rgba(139,92,246,0.2); }
         .form-control input[readonly] { background: #E2E8F0; font-weight: bold; color: #1E293B;}
         
         .req-star { color: #DC2626; margin-left: 2px; }
         .error-input { border-color: #DC2626 !important; background: #FEF2F2 !important; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2) !important; }
 
-        .incident-box { background: #F8FAFC; border: 1px solid #CBD5E1; padding: 18px; border-radius: 10px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
-        .incident-item { display: flex; flex-direction: column; gap: 6px; }
+        /* MULTI-SELECT INCIDENTS */
+        .incident-box { background: #F8FAFC; border: 1px solid #CBD5E1; padding: 15px; border-radius: 8px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; }
+        .incident-item { display: flex; flex-direction: column; gap: 5px; }
         .incident-item label { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 400; color: #334155; cursor: pointer; margin: 0;}
-        .incident-item input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer;}
+        .incident-item input[type="checkbox"] { width: 18px; height: 18px; }
         .incident-detail-input { display: none; background: #FFF !important; border-color: #A78BFA !important; }
 
-        /* CARDS */
-        .home-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 35px; }
-        .card { padding: 25px; border-radius: 16px; color: white; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.3s ease;}
+        /* CARDS (HOME) */
+        .home-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { padding: 25px; border-radius: 20px; color: white; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.2s;}
         .card:hover { transform: translateY(-5px); }
-        .card-title { font-size: 18px; font-weight: 600; opacity: 0.9; margin-bottom: 12px; font-family: 'Sarabun', sans-serif;}
-        .card-value { font-size: 38px; font-weight: 700; font-family: 'Prompt', sans-serif; line-height: 1.2;}
-        .card-bg-icon { position: absolute; right: -15px; bottom: -20px; font-size: 110px; opacity: 0.15; }
+        .card-title { font-size: 18px; font-weight: 600; opacity: 0.9; margin-bottom: 10px; font-family: 'Sarabun', sans-serif;}
+        .card-value { font-size: 38px; font-weight: 700; font-family: 'Prompt', sans-serif; }
+        .card-bg-icon { position: absolute; right: -10px; bottom: -20px; font-size: 100px; opacity: 0.15; }
 
         /* TABLES */
         .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: left; font-size: 16px;}
-        .data-table th { padding: 14px; border-bottom: 2px solid #E2E8F0; color: #4C1D95; font-weight: 600; font-family: 'Prompt', sans-serif; background: #F8FAFC;}
-        .data-table td { padding: 14px; border-bottom: 1px solid #E2E8F0; color: #1E293B; vertical-align: top; line-height: 1.6;}
+        .data-table th { padding: 12px; border-bottom: 2px solid #E2E8F0; color: #4C1D95; font-weight: 700; font-family: 'Sarabun', sans-serif; background: #F8FAFC;}
+        .data-table td { padding: 12px; border-bottom: 1px solid #E2E8F0; color: #1E293B; vertical-align: middle;}
         .data-table tr:hover { background: #F1F5F9; }
         
         .tooltip-container { position: relative; display: inline-block; cursor: pointer; color: #6D28D9; font-weight: 600; text-decoration: underline dotted; }
-        .tooltip-container .tooltip-text { visibility: hidden; width: max-content; max-width: 350px; background-color: #1E293B; color: #fff; text-align: left; border-radius: 8px; padding: 12px; position: absolute; z-index: 10; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 15px; line-height: 1.5; box-shadow: 0 10px 25px rgba(0,0,0,0.3); white-space: pre-wrap; font-family: 'Sarabun';}
+        .tooltip-container .tooltip-text { visibility: hidden; width: max-content; max-width: 300px; background-color: #1E293B; color: #fff; text-align: left; border-radius: 8px; padding: 10px; position: absolute; z-index: 10; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 15px; line-height: 1.5; box-shadow: 0 10px 25px rgba(0,0,0,0.3); white-space: pre-wrap;}
         .tooltip-container .tooltip-text::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #1E293B transparent transparent transparent; }
         .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
 
-        .multi-select-box { background: #F8FAFC; border: 1px solid #CBD5E1; padding: 15px; border-radius: 8px; max-height: 200px; overflow-y: auto; }
-        .multi-select-box label { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #334155; font-weight: 400; cursor: pointer; margin-bottom: 10px; }
-        .multi-select-box input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; }
-
         /* BUTTONS */
-        .btn { border: none; border-radius: 8px; padding: 10px 18px; font-weight: 500; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Prompt', sans-serif; font-size: 15px; }
+        .btn { border: none; border-radius: 8px; padding: 10px 18px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Sarabun', sans-serif; font-size: 16px; }
         .btn-primary { background: linear-gradient(135deg, var(--accent-purple) 0%, #6366F1 100%); color: #FFF; box-shadow: 0 4px 10px rgba(139,92,246,0.3);}
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(139,92,246,0.4);}
         .btn-ghost { background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; }
         .btn-ghost:hover { background: #E2E8F0; }
         .btn-danger { background: #FEE2E2; color: #DC2626; border: 1px solid #FCA5A5; }
 
-        /* SUB-TABS (RISK MENU) */
-        .sub-nav { display: flex; gap: 10px; border-bottom: 2px solid #E2E8F0; margin-bottom: 25px; padding-bottom: 10px; overflow-x: auto; white-space: nowrap;}
-        .sub-nav-btn { background: transparent; border: none; color: #64748B; font-family: 'Prompt'; font-size: 16px; font-weight: 600; padding: 10px 20px; cursor: pointer; border-radius: 8px; transition: 0.3s;}
-        .sub-nav-btn:hover { background: #F1F5F9; }
-        .sub-nav-btn.active { background: rgba(147, 51, 234, 0.1); color: var(--accent-purple); }
-        .sub-content { display: none; animation: fadeIn 0.4s; }
-        .sub-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* INFOGRAPHIC CARDS */
-        .info-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; margin-bottom: 15px; }
-        .info-card h4 { font-family: 'Prompt'; color: #4C1D95; font-size: 18px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;}
-        
+        /* MODAL */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-box { background: #FFF; border-radius: 16px; padding: 30px; width: 95%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: modalPop 0.3s ease-out; color: #1E293B;}
+        .modal-box { background: #FFF; border-radius: 16px; padding: 30px; width: 95%; max-width: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: modalPop 0.3s ease-out; color: #1E293B;}
         @keyframes modalPop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
         .marquee-container { width: 100%; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; font-size: 20px;}
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
+        /* Spinner Loading */
         #global-loader { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.9); z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff; font-family:'Prompt'; font-size:20px; transition: 0.5s;}
-        .spinner { border: 5px solid rgba(255,255,255,0.1); border-top: 5px solid #D8B4FE; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom:15px;}
+        .spinner { border: 5px solid rgba(255,255,255,0.1); border-top: 5px solid #C084FC; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom:15px;}
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -148,40 +123,40 @@
     </div>
 
     <div class="sidebar">
-        <div class="sidebar-logo-container">
-            <div class="shimmer-logo">IPD3 Diary+</div>
+        <div class="sidebar-logo prompt-text">
+            IPD3 <span>Diary+</span>
             <div class="sidebar-subtitle">ระบบบันทึกเหตุการณ์ประจำเวร<br>ผู้ป่วยในชาย โรงพยาบาลคอนสาร</div>
         </div>
-        <div class="nav-link active" onclick="showTab('home')"><i class="fa-solid fa-chart-pie"></i> <span>หน้าหลัก (HOME)</span></div>
+        <div class="nav-link active" onclick="showTab('home')"><i class="fa-solid fa-chart-pie"></i> <span>หน้าหลัก Dashboard</span></div>
         <div class="nav-link" onclick="showTab('record')"><i class="fa-solid fa-file-invoice"></i> <span>บันทึกเหตุการณ์เวร</span></div>
         <div class="nav-link" onclick="showTab('history')"><i class="fa-solid fa-clock-rotate-left"></i> <span>ประวัติบันทึก (Diary)</span></div>
-        <div class="nav-link hide-on-mobile" onclick="showTab('risk')"><i class="fa-solid fa-triangle-exclamation"></i> <span>อุบัติการณ์/ความเสี่ยง (Risk review)</span></div>
-        <div class="nav-link hide-on-mobile" onclick="showTab('report')"><i class="fa-solid fa-file-export"></i> <span>สรุปข้อมูลกิจกรรม</span></div>
+        <div class="nav-link hide-on-mobile" onclick="showTab('risk')"><i class="fa-solid fa-triangle-exclamation"></i> <span>รายงานความเสี่ยง</span></div>
+        <div class="nav-link hide-on-mobile" onclick="showTab('report')"><i class="fa-solid fa-file-export"></i> <span>ออกรายงานรวม</span></div>
         <hr class="hide-on-mobile" style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
-        <div class="nav-link hide-on-mobile" onclick="showTab('settings')"><i class="fa-solid fa-gear"></i> <span>ตั้งค่า (Setting)</span></div>
+        <div class="nav-link hide-on-mobile" onclick="showTab('settings')"><i class="fa-solid fa-gear"></i> <span>ตั้งค่า Dropdown</span></div>
         <div class="nav-link hide-on-mobile" onclick="window.open('https://docs.google.com/spreadsheets/d/17rtFRxHpR0ntEAZDFF3Seo-T4mbphnuPYm9i2hfqwaE/edit?gid=2122367814#gid=2122367814', '_blank')"><i class="fa-solid fa-database" style="color: #22C55E;"></i> <span>ฐานข้อมูล Sheets</span></div>
     </div>
 
     <div class="main-content">
         
         <section id="home" class="tab-content">
-            <h2 class="prompt-text blinking-smooth" style="margin-bottom: 10px; text-align: center; font-size: 32px;">" ขอบคุณที่ทำงานหนัก "</h2>
-            <p style="text-align: center; color: #E9D5FF; margin-bottom: 35px; font-size: 18px;">เรา คือ มาตรฐาน สร้างสรรงานด้วย AI ถึงใจ สุดพลัง ความหวังของเหล่าท่านชาย</p>
+            <h2 class="prompt-text blinking" style="margin-bottom: 20px; text-align: center; color: #DDD6FE; font-size: 28px;">" ขอบคุณที่ทำงานหนัก "</h2>
+            <p style="text-align: center; color: #E9D5FF; margin-bottom: 30px; font-size: 18px;">เรา คือ มาตรฐาน สร้างสรรงานด้วย AI ถึงใจ สุดพลัง ความหวังของเหล่าท่านชาย</p>
             
             <div class="home-cards">
                 <div class="card" style="background: #F8FAFC; color: #1E293B; border: 1px solid #E2E8F0;">
                     <div class="card-title">วันที่ปัจจุบัน</div>
-                    <div class="card-value" id="home-date">-- -- ----</div>
+                    <div class="card-value prompt-text" id="home-date">-- -- ----</div>
                     <i class="fa-regular fa-calendar card-bg-icon" style="color: #CBD5E1;"></i>
                 </div>
                 <div class="card" style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);">
                     <div class="card-title">สถานะภาระงาน (เวรล่าสุด)</div>
-                    <div class="card-value" id="home-workload" style="font-size: 26px; margin-top: 10px;">ไม่มีข้อมูล</div>
+                    <div class="card-value prompt-text" id="home-workload" style="font-size: 24px; margin-top: 10px;">ไม่มีข้อมูล</div>
                     <i class="fa-solid fa-user-nurse card-bg-icon"></i>
                 </div>
                 <div class="card" style="background: linear-gradient(135deg, #20C997 0%, #059669 100%);" onclick="showTab('history')">
                     <div class="card-title">ผู้ป่วยคงพยาบาล (เวรล่าสุด)</div>
-                    <div class="card-value"><span id="home-ipd">0</span> <span style="font-size: 22px; font-weight: normal; font-family: 'Sarabun';">ราย</span></div>
+                    <div class="card-value prompt-text"><span id="home-ipd">0</span> <span style="font-size: 20px; font-weight: normal; font-family: 'Sarabun';">ราย</span></div>
                     <i class="fa-solid fa-bed-pulse card-bg-icon"></i>
                 </div>
                 <div class="card" style="background: linear-gradient(135deg, #A855F7 0%, #7C3AED 100%); grid-column: 1 / -1;" onclick="showTab('history')">
@@ -198,12 +173,12 @@
                     <div>
                         <div class="form-control"><label>จากวันที่</label><input type="date" id="dash-start"></div>
                         <div class="form-control"><label>ถึงวันที่</label><input type="date" id="dash-end"></div>
-                        <div class="form-control"><label>รูปแบบการแสดงผล</label>
+                        <div class="form-control"><label>รูปแบบ</label>
                             <select id="dash-type">
                                 <option value="bar">กราฟแท่ง</option><option value="pie">กราฟวงกลม</option><option value="table">ตารางข้อมูล</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary" style="width: 100%; font-size: 16px; padding: 12px;" onclick="updateDashboard()"><i class="fa-solid fa-rotate"></i> อัปเดตข้อมูล</button>
+                        <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="updateDashboard()"><i class="fa-solid fa-rotate"></i> อัปเดตข้อมูล</button>
                     </div>
                     <div>
                         <label style="font-size: 15px; color: #475569; font-weight: 600; display: block; margin-bottom: 6px;">เลือกรายการที่ต้องการวิเคราะห์</label>
@@ -217,19 +192,7 @@
             </div>
 
             <div class="glass-panel">
-                <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-bell"></i> สรุปข้อมูล 4 รายการ</h3>
-                
-                <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-end; flex-wrap: wrap;">
-                    <div class="form-control" style="margin:0;"><label>จากวันที่</label><input type="date" id="sum-start" onchange="updateSummaryTable()"></div>
-                    <div class="form-control" style="margin:0;"><label>ถึงวันที่</label><input type="date" id="sum-end" onchange="updateSummaryTable()"></div>
-                    <div class="form-control" style="margin:0;"><label>กรองความเสี่ยง</label>
-                        <select id="sum-incident" onchange="updateSummaryTable()">
-                            <option value="all">ดูทั้งหมด</option>
-                            <option value="risk">เฉพาะเวรที่มีความเสี่ยง / เคสสำคัญ</option>
-                            <option value="normal">เฉพาะเหตุการณ์ทั่วไปปกติ</option>
-                        </select>
-                    </div>
-                </div>
+                <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-bell"></i> สรุปข้อมูลรวม 4 อย่าง (Interactive)</h3>
                 <p style="font-size: 14px; color: #64748B; margin-bottom: 15px;">* เอาเมาส์ชี้ตัวหนังสือสีม่วงเพื่ออ่านรายละเอียด และคลิกที่แถวเพื่อแก้ไขบันทึกเวรนั้นทันที</p>
                 <div style="overflow-x: auto;">
                     <table class="data-table">
@@ -242,7 +205,7 @@
 
         <section id="record" class="tab-content" style="display: none;">
             <div id="export-area" class="glass-panel">
-                <h2 class="prompt-text" style="text-align: center; font-size: 26px; margin-bottom: 25px; color: #4C1D95;">บันทึกเหตุการณ์ประจำเวร</h2>
+                <h2 class="prompt-text" style="text-align: center; font-size: 26px; margin-bottom: 25px; color: #4C1D95;">บันทึกรายงานเหตุการณ์เวรประจำวัน</h2>
                 <input type="hidden" id="edit-id" value="">
 
                 <div class="grid-auto" style="grid-template-columns: 1fr 1fr; gap: 15px;">
@@ -269,7 +232,7 @@
                 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 10px;">
                     <div style="background: #F5F3FF; border: 1px solid #DDD6FE; padding: 15px; border-radius: 12px; text-align: center;">
                         <span style="font-size: 16px; font-weight: 600; color: #6D28D9;">คงพยาบาลสุทธิ</span>
-                        <div id="remaining-count" class="prompt-text" style="font-size: 44px; font-weight: 700; color: #4C1D95;">0</div>
+                        <div id="remaining-count" class="prompt-text" style="font-size: 40px; font-weight: 700; color: #4C1D95;">0</div>
                         <input type="hidden" id="v-remain" class="data-field" data-label="คงพยาบาล" value="0">
                     </div>
                     <div style="background: #FFF7ED; border: 1px solid #FED7AA; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
@@ -297,7 +260,7 @@
                 
                 <div class="form-control">
                     <label style="color: #D97706;">อุบัติการณ์และความเสี่ยง (เลือกได้มากกว่า 1 รายการ)</label>
-                    <p style="font-size: 14px; color: #64748B; margin-bottom: 10px;">* เมื่อเลือกหัวข้อใด ต้องระบุรายละเอียดในช่องที่ปรากฏขึ้นมาด้วย</p>
+                    <p style="font-size: 13px; color: #64748B; margin-bottom: 10px;">* เมื่อเลือกหัวข้อใด ต้องระบุรายละเอียดในช่องที่ปรากฏขึ้นมาด้วย</p>
                     <div class="incident-box">
                         <div class="incident-item">
                             <label><input type="checkbox" class="inc-chk" value="ให้ยา/สารน้ำผิด"> ให้ยา/สารน้ำผิด</label>
@@ -324,8 +287,8 @@
                             <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="ด้านสิ่งแวดล้อม สถานที่ หรือสิ่งอำนวยความสะดวก">
                         </div>
                         <div class="incident-item">
-                            <label><input type="checkbox" class="inc-chk" value="เกิดเหตุการณ์รุนแรง การใช้กำลัง และความเสี่ยงการฟ้องร้อง"> เหตุรุนแรง/ความเสี่ยงฟ้องร้อง</label>
-                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="เกิดเหตุการณ์รุนแรง การใช้กำลัง และความเสี่ยงการฟ้องร้อง">
+                            <label><input type="checkbox" class="inc-chk" value="เกิดเกตุการณ์รุนแรง การใช้กำลัง และความเสี่ยงการฟ้องร้อง"> เหตุรุนแรง/ความเสี่ยงฟ้องร้อง</label>
+                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="เกิดเกตุการณ์รุนแรง การใช้กำลัง และความเสี่ยงการฟ้องร้อง">
                         </div>
                         <div class="incident-item">
                             <label><input type="checkbox" class="inc-chk" id="chk-other" value="อื่นๆ"> อุบัติการณ์อื่นๆ... ระบุ</label>
@@ -417,18 +380,17 @@
         <section id="history" class="tab-content" style="display: none;">
             <div class="glass-panel">
                 <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-list-check"></i> ประวัติการบันทึก (Diary)</h3>
-                
-                <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-end; flex-wrap: wrap;">
-                    <div class="form-control" style="margin:0;"><label>จากวันที่</label><input type="date" id="hist-start" onchange="renderDiaryRowsTable()"></div>
-                    <div class="form-control" style="margin:0;"><label>ถึงวันที่</label><input type="date" id="hist-end" onchange="renderDiaryRowsTable()"></div>
-                    <div class="form-control" style="margin:0;"><label>การเรียงลำดับ</label>
-                        <select id="hist-sort" onchange="renderDiaryRowsTable()">
+                <div style="display: flex; gap: 15px; margin-bottom: 15px; align-items: flex-end; flex-wrap: wrap;">
+                    <div class="form-control"><label>จากวันที่</label><input type="date" id="hist-start"></div>
+                    <div class="form-control"><label>ถึงวันที่</label><input type="date" id="hist-end"></div>
+                    <div class="form-control"><label>การเรียงลำดับ</label>
+                        <select id="hist-sort">
                             <option value="desc">ใหม่ไปเก่า</option>
                             <option value="asc">เก่าไปใหม่</option>
                         </select>
                     </div>
+                    <button class="btn btn-primary" style="margin-bottom: 10px;" onclick="renderDiaryRowsTable()"><i class="fa-solid fa-filter"></i> กรองข้อมูล</button>
                 </div>
-                
                 <div style="overflow-x: auto;">
                     <table class="data-table">
                         <thead><tr><th>วันที่</th><th>เวร</th><th>RN 1</th><th>จัดการ (ดึงข้อมูลเป็นไฟล์)</th></tr></thead>
@@ -439,77 +401,23 @@
         </section>
 
         <section id="risk" class="tab-content" style="display: none;">
-            <div class="glass-panel" style="padding-bottom: 0;">
-                <div class="sub-nav">
-                    <button class="sub-nav-btn active" onclick="switchRiskTab('risk-review')"><i class="fa-solid fa-clock-rotate-left"></i> ทบทวนอุบัติการณ์/ความเสี่ยง (Review)</button>
-                    <button class="sub-nav-btn" onclick="switchRiskTab('risk-guide')"><i class="fa-solid fa-book-medical"></i> เมนูคู่มือความเสี่ยง</button>
-                </div>
-            </div>
-
-            <div id="risk-review" class="sub-content active glass-panel">
-                <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-magnifying-glass-chart"></i> ทบทวนอุบัติการณ์และความเสี่ยง</h3>
-                <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-end; flex-wrap: wrap;">
-                    <div class="form-control" style="margin:0;"><label>จากวันที่</label><input type="date" id="risk-sum-start" onchange="updateRiskReviewTable()"></div>
-                    <div class="form-control" style="margin:0;"><label>ถึงวันที่</label><input type="date" id="risk-sum-end" onchange="updateRiskReviewTable()"></div>
-                    <div class="form-control" style="margin:0;"><label>กรองความเสี่ยง</label>
-                        <select id="risk-sum-incident" onchange="updateRiskReviewTable()">
-                            <option value="risk">เฉพาะเวรที่มีความเสี่ยง / เคสสำคัญ</option>
-                            <option value="all">ดูทั้งหมดทุกเวร</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" style="margin-bottom: 1px;" onclick="exportRiskPDF()"><i class="fa-solid fa-file-pdf"></i> บันทึกเป็น PDF</button>
-                    <button class="btn" style="background: #10B981; color: white; margin-bottom: 1px;" onclick="exportRiskCSV()"><i class="fa-solid fa-file-csv"></i> ส่งออก CSV</button>
-                </div>
+            <div class="glass-panel">
+                <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-shield-halved"></i> คู่มือและรายงานความเสี่ยง (NRLS)</h3>
+                <a href="https://kshpt.thai-nrls.org/" target="_blank" class="btn btn-primary" style="margin-bottom: 20px;"><i class="fa-solid fa-up-right-from-square"></i> บันทึกเข้าระบบ Thai NRLS</a>
                 
-                <div id="risk-export-target" style="background: white; padding: 20px; border-radius: 8px;">
-                    <h2 class="prompt-text" style="text-align: center; color: #1E293B; margin-bottom: 20px; font-size: 22px;">รายงานทบทวนอุบัติการณ์และความเสี่ยง</h2>
-                    <div style="overflow-x: auto;">
-                        <table class="data-table">
-                            <thead><tr><th>วันที่</th><th>เวร</th><th>อุบัติการณ์ / ความเสี่ยง</th><th>Case REFER</th><th>ผู้ป่วยประเภท 4</th><th>Case DEAD</th></tr></thead>
-                            <tbody id="risk-review-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div id="risk-guide" class="sub-content glass-panel">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
-                    <h3 class="section-title" style="margin: 0;"><i class="fa-solid fa-book-open"></i> คู่มือและการรายงานความเสี่ยง (NRLS)</h3>
-                    <a href="https://kshpt.thai-nrls.org/" target="_blank" class="btn btn-primary" style="font-size: 16px;"><i class="fa-solid fa-up-right-from-square"></i> เข้าสู่หน้าบันทึก Thai NRLS</a>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                    <div class="info-card">
-                        <h4><i class="fa-solid fa-circle-info"></i> อุบัติการณ์ (Incident) คืออะไร?</h4>
-                        <p style="font-size: 16px; color: #334155; line-height: 1.6;">เหตุการณ์ที่ไม่ได้คาดคิด หรือไม่ได้ตั้งใจให้เกิด ซึ่งอาจก่อให้เกิดความสูญเสีย หรือเป็นอันตรายต่อผู้ป่วย ญาติ เจ้าหน้าที่ หรือทรัพย์สินของโรงพยาบาล</p>
-                    </div>
-                    <div class="info-card">
-                        <h4><i class="fa-solid fa-triangle-exclamation"></i> ความเสี่ยง (Risk) คืออะไร?</h4>
-                        <p style="font-size: 16px; color: #334155; line-height: 1.6;">โอกาสที่จะเกิดความสูญเสีย หรือผลกระทบทางลบจากอุบัติการณ์นั้นๆ ซึ่งวัดได้จากระดับความรุนแรง (Severity) โอกาสเกิด (Likelihood)</p>
-                    </div>
-                </div>
-
-                <div class="info-card" style="margin-bottom: 30px;">
-                    <h4><i class="fa-solid fa-layer-group"></i> ประเภทความเสี่ยงหลัก</h4>
-                    <ul style="margin-left: 20px; font-size: 16px; color: #334155; line-height: 1.6;">
-                        <li><strong>Clinical Risk:</strong> ความเสี่ยงทางคลินิก (เช่น การให้ยาผิด, การวินิจฉัยผิดพลาด)</li>
-                        <li><strong>Non-Clinical Risk:</strong> ความเสี่ยงทั่วไป (เช่น ลื่นล้ม, ทรัพย์สินสูญหาย, อัคคีภัย)</li>
-                    </ul>
-                </div>
-
-                <h4 style="font-family:'Prompt'; color: #1E293B; margin-bottom: 15px; font-size: 18px;"><i class="fa-solid fa-chart-bar"></i> ระดับความรุนแรงทางคลินิก (Click เพื่อดูการจัดการ)</h4>
+                <h4 style="font-family:'Prompt'; color: #1E293B; margin-bottom: 15px;">ระดับความเสี่ยง (Interactive)</h4>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-                    <div style="background: #DCFCE7; border: 1px solid #86EFAC; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;" onclick="showModal('ระดับ A - B (Near Miss)', 'เกิดความคลาดเคลื่อน แต่ยังไม่ถึงตัวผู้ป่วย\n\nการจัดการ:\n1. บันทึกอุบัติการณ์ภายใน\n2. ทบทวนกระบวนการเพื่อป้องกัน', 'info')">
-                        <div class="prompt-text" style="font-size: 30px; font-weight: 700; color: #16A34A;">A - B</div><div style="font-size: 15px; color: #15803D; font-weight: 600;">Near Miss</div>
+                    <div style="background: #DCFCE7; border: 1px solid #86EFAC; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;" onclick="showModal('ระดับ A - B (Near Miss)', 'เกิดความคลาดเคลื่อน แต่ยังไม่ถึงตัวผู้ป่วย', 'info')">
+                        <div class="prompt-text" style="font-size: 30px; font-weight: 700; color: #16A34A;">A - B</div><div style="font-size: 15px; color: #15803D;">Near Miss</div>
                     </div>
-                    <div style="background: #FEF9C3; border: 1px solid #FDE047; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;" onclick="showModal('ระดับ C - D (No Harm)', 'ถึงตัวผู้ป่วยแล้ว แต่ไม่เกิดอันตราย\n\nการจัดการ:\n1. แจ้งแพทย์เวรทราบ\n2. บันทึกและวิเคราะห์หาสาเหตุ', 'warning')">
-                        <div class="prompt-text" style="font-size: 30px; font-weight: 700; color: #CA8A04;">C - D</div><div style="font-size: 15px; color: #A16207; font-weight: 600;">No Harm</div>
+                    <div style="background: #FEF9C3; border: 1px solid #FDE047; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;" onclick="showModal('ระดับ C - D (No Harm)', 'ถึงตัวผู้ป่วยแล้ว แต่ไม่เกิดอันตราย', 'warning')">
+                        <div class="prompt-text" style="font-size: 30px; font-weight: 700; color: #CA8A04;">C - D</div><div style="font-size: 15px; color: #A16207;">No Harm</div>
                     </div>
-                    <div style="background: #FFEDD5; border: 1px solid #FDBA74; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;" onclick="showModal('ระดับ E - F (Temp Harm)', 'ได้รับอันตรายชั่วคราว ขยายเวลานอน รพ.\n\nการจัดการ:\n1. ทีมดูแลรักษาประเมินซ้ำ\n2. รายงานผู้บริหารทางการพยาบาล', 'warning')">
-                        <div class="prompt-text" style="font-size: 30px; font-weight: 700; color: #EA580C;">E - F</div><div style="font-size: 15px; color: #C2410C; font-weight: 600;">Temp Harm</div>
+                    <div style="background: #FFEDD5; border: 1px solid #FDBA74; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;" onclick="showModal('ระดับ E - F (Temp Harm)', 'ได้รับอันตรายชั่วคราว ขยายเวลานอน รพ.', 'warning')">
+                        <div class="prompt-text" style="font-size: 30px; font-weight: 700; color: #EA580C;">E - F</div><div style="font-size: 15px; color: #C2410C;">Temp Harm</div>
                     </div>
-                    <div style="background: #FEE2E2; border: 1px solid #FCA5A5; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;" onclick="showModal('ระดับ G - I (Sentinel Event)', 'อันตรายถาวร / CPR / เสียชีวิต\n\nการจัดการ:\n1. รายงานผู้อำนวยการทันที\n2. ทำ RCA ภายใน 24 ชม.', 'danger')">
-                        <div class="prompt-text" style="font-size: 30px; font-weight: 700; color: #DC2626;">G - I</div><div style="font-size: 15px; color: #B91C1C; font-weight: 600;">Severe / Death</div>
+                    <div style="background: #FEE2E2; border: 1px solid #FCA5A5; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;" onclick="showModal('ระดับ G - I (Sentinel Event)', 'อันตรายถาวร / CPR / เสียชีวิต', 'danger')">
+                        <div class="prompt-text" style="font-size: 30px; font-weight: 700; color: #DC2626;">G - I</div><div style="font-size: 15px; color: #B91C1C;">Severe / Death</div>
                     </div>
                 </div>
             </div>
@@ -517,17 +425,17 @@
 
         <section id="report" class="tab-content" style="display: none;">
             <div class="glass-panel">
-                <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-file-export"></i> สรุปข้อมูลกิจกรรม (Export CSV)</h3>
+                <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-file-export"></i> สรุปข้อมูล และ ออกรายงาน (Export CSV)</h3>
                 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 20px;">
                     <div>
                         <div class="form-control"><label>จากวันที่</label><input type="date" id="exp-start"></div>
                         <div class="form-control"><label>ถึงวันที่</label><input type="date" id="exp-end"></div>
-                        <button class="btn btn-primary" style="width: 100%; margin-top: 10px; font-size: 16px; padding: 12px;" onclick="generateSummaryReport()"><i class="fa-solid fa-calculator"></i> สรุปข้อมูล</button>
-                        <button class="btn" style="background: #10B981; color: white; width: 100%; margin-top: 10px; font-size: 16px; padding: 12px;" onclick="exportData('csv')"><i class="fa-solid fa-file-csv"></i> โหลด CSV (ข้อมูลดิบ)</button>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="generateSummaryReport()"><i class="fa-solid fa-calculator"></i> สรุปข้อมูล</button>
+                        <button class="btn" style="background: #10B981; color: white; width: 100%; margin-top: 10px;" onclick="exportData('csv')"><i class="fa-solid fa-file-csv"></i> โหลด CSV (ข้อมูลดิบ)</button>
                     </div>
                     <div>
-                        <div id="summary-table-container" style="background: #F8FAFC; padding: 20px; border-radius: 12px; border: 1px solid #CBD5E1; max-height: 400px; overflow-y: auto;">
-                            <p style="text-align: center; color: #64748B; padding: 20px; font-size: 16px;">กรุณากดปุ่ม "สรุปข้อมูล" เพื่อดูยอดรวมสถิติทั้งหมดในช่วงเวลาที่เลือก</p>
+                        <div id="summary-table-container" style="background: #F8FAFC; padding: 15px; border-radius: 8px; border: 1px solid #CBD5E1; max-height: 400px; overflow-y: auto;">
+                            <p style="text-align: center; color: #64748B; padding: 20px;">กรุณากดปุ่ม "สรุปข้อมูล" เพื่อดูยอดรวมสถิติทั้งหมดในช่วงเวลาที่เลือก</p>
                         </div>
                     </div>
                 </div>
@@ -536,7 +444,7 @@
 
         <section id="settings" class="tab-content" style="display: none;">
             <div class="glass-panel">
-                <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-gear"></i> ตั้งค่า (Setting) - Dropdown รายชื่อ</h3>
+                <h3 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-gear"></i> ตั้งค่าระบบ Dropdown รายชื่อ</h3>
                 <p style="font-size: 15px; color: #64748B; margin-bottom: 15px;">* เพิ่มหรือลบรายชื่อบุคลากร (คั่นด้วยเครื่องหมายลูกน้ำ , )</p>
                 <div class="form-control"><label>พยาบาล (RN)</label><textarea id="set-rn" rows="3"></textarea></div>
                 <div class="form-control"><label>ผู้ช่วยเหลือคนไข้ (NA)</label><textarea id="set-na" rows="2"></textarea></div>
@@ -550,20 +458,20 @@
 
     <div id="customModal" class="modal-overlay">
         <div class="modal-box">
-            <h3 id="modalTitle" class="prompt-text" style="font-size: 22px; margin-bottom: 10px; color: #1E293B;"></h3>
-            <div id="modalDesc" style="font-size: 16px; color: #475569; margin-bottom: 25px; line-height: 1.6; white-space: pre-wrap; text-align: left; font-family: 'Sarabun';"></div>
+            <h3 id="modalTitle" class="prompt-text" style="font-size: 20px; margin-bottom: 10px; color: #1E293B;"></h3>
+            <div id="modalDesc" style="font-size: 18px; color: #475569; margin-bottom: 20px; line-height: 1.6; white-space: pre-wrap; text-align: left; font-family: 'Sarabun';"></div>
             <div id="modalActions" style="text-align: right;"></div>
         </div>
     </div>
 
     <div id="render-template" style="position: absolute; left: -9999px; background: white; padding: 50px; width: 850px; color: black; font-family: 'Sarabun', sans-serif;">
         <div style="text-align: center; border-bottom: 3px solid #4C1D95; padding-bottom: 15px; margin-bottom: 20px;">
-            <h2 class="prompt-text" style="color: #4C1D95; margin:0; font-size: 28px;">ระบบบันทึกเหตุการณ์ประจำเวร</h2>
-            <h3 class="prompt-text" style="color: #1E293B; margin:5px 0 0 0; font-size: 22px;">ผู้ป่วยในชาย โรงพยาบาลคอนสาร</h3>
+            <h2 class="prompt-text" style="color: #4C1D95; margin:0; font-size: 26px;">ระบบบันทึกเหตุการณ์ประจำเวร</h2>
+            <h3 class="prompt-text" style="color: #1E293B; margin:5px 0 0 0; font-size: 20px;">ผู้ป่วยในชาย โรงพยาบาลคอนสาร</h3>
             <p id="rt-subtitle" style="font-size: 18px; font-weight: 600; margin: 10px 0 0 0;">วันที่ -- | เวร --</p>
         </div>
-        <div id="rt-content" style="font-size: 18px; line-height: 1.5;"></div>
-        <div style="display: flex; justify-content: space-around; margin-top: 40px; text-align: center; font-size: 18px;">
+        <div id="rt-content" style="font-size: 16px; line-height: 1.5;"></div>
+        <div style="display: flex; justify-content: space-around; margin-top: 40px; text-align: center; font-size: 16px;">
             <div><br><br><br><p>ลงชื่อ.......................................................</p><p id="rt-rn-name" style="font-weight:600; margin-top:5px;">( ผู้บันทึก )</p><p>พยาบาลวิชาชีพ</p></div>
             <div><p>ลงชื่อ.......................................................</p><p style="font-weight:600; margin-top:5px;">( นางสาววินัย ชาวเชียงตุง )</p><p>หัวหน้างานการพยาบาลผู้ป่วยในชาย</p></div>
             <div><p>ลงชื่อ.......................................................</p><p style="font-weight:600; margin-top:5px;">( นางไพเราะ คลองนาวัง )</p><p>รักษาการหัวหน้ากลุ่มงานการพยาบาล</p></div>
@@ -583,26 +491,32 @@
                     const headers = result.data[0];
                     const rows = result.data.slice(1);
                     
+                    // แปลงข้อมูลแถวกลับมาเป็น Array of Objects เหมือน LocalStorage
                     let newStorage = rows.map((row, index) => {
                         let dataObj = {};
+                        // Map ค่าตามลำดับช่องบนฟอร์มปัจจุบันของเรา
                         document.querySelectorAll('.data-field').forEach(f => {
                             let lbl = f.getAttribute('data-label');
                             if(lbl) {
+                                // หา index จาก header ในชีตที่ตรงกับ label เรา (ถ้าชื่อตรงกัน)
                                 let colIndex = headers.indexOf(lbl);
                                 if(colIndex !== -1) {
                                     dataObj[lbl] = f.type === 'number' ? parseInt(row[colIndex]) || 0 : row[colIndex];
                                 }
                             }
                         });
+                        // สร้าง Object
                         return {
-                            uid: new Date(row[0]).getTime() + index,
+                            uid: new Date(row[0]).getTime() + index, // mock UID
                             date: row[0], shift: row[1],
                             rn: row[headers.indexOf('พยาบาล 1')] || "ไม่ระบุ",
                             netCount: parseInt(row[headers.indexOf('คงพยาบาล')]) || 0,
-                            datasetArr: row, datasetObj: dataObj
+                            datasetArr: row,
+                            datasetObj: dataObj
                         };
                     });
                     
+                    // Sort descending
                     const shiftOrder = { "ดึก": 1, "เช้า": 2, "บ่าย": 3 };
                     newStorage.sort((a, b) => {
                         if(a.date > b.date) return -1; if(a.date < b.date) return 1;
@@ -612,13 +526,13 @@
                     localDiaryStorage = newStorage;
                     localStorage.setItem('ipd3_diary_storage', JSON.stringify(localDiaryStorage));
                 }
-            } catch(e) { console.warn("ไม่สามารถซิงค์ได้ ใช้งานออฟไลน์แทน", e); }
+            } catch(e) {
+                console.warn("ไม่สามารถดึงข้อมูลจาก Sheets ได้ (อาจติดปัญหา CORS หรือยังไม่ได้แก้ Apps Script) ใช้งานออฟไลน์แทน", e);
+            }
             
             document.getElementById('global-loader').style.opacity = '0';
             setTimeout(() => document.getElementById('global-loader').style.display = 'none', 500);
             updateDashboard();
-            updateSummaryTable();
-            updateRiskReviewTable();
         }
 
         // --- 2. DROPDOWN SETTINGS ---
@@ -652,7 +566,7 @@
 
         // --- 3. MODAL & UI SETUP ---
         function showModal(title, desc, type='info', onConfirm=null) {
-            document.getElementById('modalTitle').innerText = title; document.getElementById('modalDesc').innerHTML = desc;
+            document.getElementById('modalTitle').innerText = title; document.getElementById('modalDesc').innerHTML = desc; // allow html
             let actions = document.getElementById('modalActions');
             if(onConfirm) {
                 actions.innerHTML = `<button class="btn btn-ghost" onclick="closeModal()">ยกเลิก</button> <button class="btn btn-danger" id="btnConfirm">ยืนยัน</button>`;
@@ -673,13 +587,18 @@
                 dashCheck.innerHTML += `<label><input type="checkbox" value="${lbl}" ${i<4?"checked":""}> ${lbl}</label>`;
             });
 
+            // Dynamic Incident Details logic (Show/Hide text inputs)
             document.querySelectorAll('.inc-chk').forEach(chk => {
                 chk.addEventListener('change', (e) => {
                     let input = e.target.closest('.incident-item').querySelector('.incident-detail-input');
                     if(e.target.checked) {
-                        input.style.display = 'block'; input.setAttribute('required', 'true');
+                        input.style.display = 'block';
+                        input.setAttribute('required', 'true');
                     } else {
-                        input.style.display = 'none'; input.removeAttribute('required'); input.value = ""; input.classList.remove('error-input');
+                        input.style.display = 'none';
+                        input.removeAttribute('required');
+                        input.value = "";
+                        input.classList.remove('error-input');
                     }
                     updateIncidentFinal();
                 });
@@ -693,11 +612,10 @@
             document.getElementById('dash-start').value = today; document.getElementById('dash-end').value = today;
             document.getElementById('exp-start').value = today; document.getElementById('exp-end').value = today;
             
+            // Set history filter dates (last 7 days)
             let lastWeek = new Date(); lastWeek.setDate(lastWeek.getDate() - 7);
-            let lwStr = lastWeek.toISOString().split('T')[0];
-            document.getElementById('hist-start').value = lwStr; document.getElementById('hist-end').value = today;
-            document.getElementById('sum-start').value = lwStr; document.getElementById('sum-end').value = today;
-            document.getElementById('risk-sum-start').value = lwStr; document.getElementById('risk-sum-end').value = today;
+            document.getElementById('hist-start').value = lastWeek.toISOString().split('T')[0];
+            document.getElementById('hist-end').value = today;
             
             runLiveCalc(); updateIncidentFinal();
         }
@@ -712,7 +630,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            setupUI(); loadDataFromSheet();
+            setupUI();
+            loadDataFromSheet(); // Sync from Google Sheet on load
         });
 
         function showTab(tabId) {
@@ -721,8 +640,7 @@
             document.getElementById(tabId).style.display = 'block';
             if(event && event.currentTarget.classList) event.currentTarget.classList.add('active');
             if(tabId === 'history') renderDiaryRowsTable();
-            if(tabId === 'home') { updateDashboard(); updateSummaryTable(); }
-            if(tabId === 'risk') { switchRiskTab('risk-review'); }
+            if(tabId === 'home') updateDashboard();
             window.scrollTo(0,0);
         }
 
@@ -742,13 +660,16 @@
             let dead = parseInt(document.getElementById('v-dead').value)||0;
             let ref = parseInt(document.getElementById('v-ref').value)||0;
 
+            // Rule: AMA > 0 -> must check "ปฏิเสธการรักษา"
             const chkAma = document.getElementById('chk-ama');
             if(ama > 0 && !chkAma.checked) { chkAma.checked = true; chkAma.dispatchEvent(new Event('change')); }
             
+            // Rule: Dead > 0 -> require v-dead-desc
             let dDesc = document.getElementById('v-dead-desc');
             document.getElementById('req-dead').style.display = dead > 0 ? 'inline' : 'none';
             if(dead > 0) dDesc.setAttribute('required', 'true'); else { dDesc.removeAttribute('required'); dDesc.classList.remove('error-input'); }
 
+            // Rule: Refer > 0 -> require v-refer-desc
             let rDesc = document.getElementById('v-refer-desc');
             document.getElementById('req-ref').style.display = ref > 0 ? 'inline' : 'none';
             if(ref > 0) rDesc.setAttribute('required', 'true'); else { rDesc.removeAttribute('required'); rDesc.classList.remove('error-input'); }
@@ -770,24 +691,33 @@
         }
 
         function validateForm() {
-            let isValid = true; let errText = "";
+            let isValid = true;
+            let errText = "";
+
+            // Check incident detail boxes
             document.querySelectorAll('.inc-chk:checked').forEach(chk => {
                 let inp = chk.closest('.incident-item').querySelector('.incident-detail-input');
                 if(!inp.value.trim()) { inp.classList.add('error-input'); isValid = false; errText += `- กรุณาระบุรายละเอียด: ${chk.value}\n`; }
             });
+
+            // Check Dead
             let dead = parseInt(document.getElementById('v-dead').value)||0;
             let dDesc = document.getElementById('v-dead-desc');
             if(dead > 0 && !dDesc.value.trim()) { dDesc.classList.add('error-input'); isValid = false; errText += `- มี Case Dead กรุณาระบุรายละเอียด\n`; }
 
+            // Check Refer
             let ref = parseInt(document.getElementById('v-ref').value)||0;
             let rDesc = document.getElementById('v-refer-desc');
             if(ref > 0 && !rDesc.value.trim()) { rDesc.classList.add('error-input'); isValid = false; errText += `- มี Case Refer กรุณาระบุรายละเอียด\n`; }
+
             return { isValid, errText };
         }
 
         // --- 5. SAVE DATA ---
         async function executeSaveProcess() {
-            if(document.getElementById('sum-warning').style.display === 'block') { return showModal('ข้อมูลคลาดเคลื่อน', 'กรุณาตรวจยอดประเภทผู้ป่วย 1-4 ให้ตรงกับยอดคงพยาบาลก่อนบันทึกครับ', 'danger'); }
+            if(document.getElementById('sum-warning').style.display === 'block') {
+                return showModal('ข้อมูลคลาดเคลื่อน', 'กรุณาตรวจยอดประเภทผู้ป่วย 1-4 ให้ตรงกับยอดคงพยาบาลก่อนบันทึกครับ', 'danger');
+            }
             
             let v = validateForm();
             if(!v.isValid) return showModal('ข้อมูลไม่ครบถ้วน', v.errText, 'danger');
@@ -820,6 +750,7 @@
 
             localStorage.setItem('ipd3_diary_storage', JSON.stringify(localDiaryStorage));
 
+            // Generate PDF Using the beautiful template
             document.getElementById('rt-subtitle').innerText = `วันที่ ${logItem.date} | เวร ${logItem.shift}`;
             document.getElementById('rt-content').innerHTML = buildTemplateHTML(logItem);
             document.getElementById('rt-rn-name').innerText = `( ${logItem.rn} )`;
@@ -845,25 +776,28 @@
             }, 500);
         }
 
+        // --- BUILD PDF TEMPLATE ---
         function buildTemplateHTML(r) {
             let html = `
             <div style="background: #F8FAFC; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #CBD5E1;">
-                <h4 class="prompt-text" style="color: #4C1D95; margin: 0 0 10px 0; font-size: 20px;">1. สถิติผู้ป่วยและภาระงาน</h4>
+                <h4 class="prompt-text" style="color: #4C1D95; margin: 0 0 10px 0; font-size: 18px;">1. สถิติผู้ป่วยและภาระงาน</h4>
                 <p style="margin:0;"><strong>ยอดยกมา:</strong> ${r.datasetObj['ยอดยกมา']||0} | <strong>รับใหม่:</strong> ${r.datasetObj['รับใหม่']||0} | <strong>รับย้าย:</strong> ${r.datasetObj['รับย้าย']||0} | <strong>จำหน่าย:</strong> ${r.datasetObj['จำหน่าย']||0} | <strong>ย้ายไป:</strong> ${r.datasetObj['ย้ายไป']||0}</p>
                 <p style="margin:5px 0 0 0;"><strong>ตาย:</strong> ${r.datasetObj['ตาย']||0} | <strong>ส่งต่อ:</strong> ${r.datasetObj['ส่งต่อ']||0} | <strong>ไม่สมัครใจ:</strong> ${r.datasetObj['ไม่สมัครใจอยู่']||0}</p>
                 <p style="margin:5px 0 0 0;"><strong style="color:#DC2626;">ยอดคงพยาบาลสุทธิ: ${r.netCount} ราย</strong> (ประเภท1: ${r.datasetObj['ประเภท 1']||0}, ประเภท2: ${r.datasetObj['ประเภท 2']||0}, ประเภท3: ${r.datasetObj['ประเภท 3']||0}, ประเภท4: ${r.datasetObj['ประเภท 4']||0})</p>
                 <p style="margin:5px 0 0 0;"><strong>คะแนนภาระงาน:</strong> ${r.datasetObj['คะแนนภาระงาน']||0} (${r.datasetObj['สถานะภาระงาน']||'-'})</p>
             </div>
+
             <div style="background: #F8FAFC; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #CBD5E1;">
-                <h4 class="prompt-text" style="color: #4C1D95; margin: 0 0 10px 0; font-size: 20px;">2. อุบัติการณ์ และความเสี่ยงประจำเวร</h4>
+                <h4 class="prompt-text" style="color: #4C1D95; margin: 0 0 10px 0; font-size: 18px;">2. อุบัติการณ์ และความเสี่ยงประจำเวร</h4>
                 <p style="margin:0;"><strong>สรุปเหตุการณ์:</strong> ${r.datasetObj['อุบัติการณ์'] || 'เหตุการณ์ทั่วไปปกติ'}</p>
                 <p style="margin:5px 0 0 0;"><strong>รายละเอียด Refer 24 ชม:</strong> ${r.datasetObj['รายละเอียด Refer 24 ชม.'] || '-'}</p>
                 <p style="margin:5px 0 0 0;"><strong>รายละเอียด Case Refer:</strong> ${r.datasetObj['รายละเอียด Refer'] || '-'}</p>
                 <p style="margin:5px 0 0 0;"><strong>รายละเอียด Case Dead:</strong> ${r.datasetObj['รายละเอียด Dead'] || '-'}</p>
                 <p style="margin:5px 0 0 0;"><strong>รายละเอียด ผู้ป่วยประเภท 4:</strong> ${r.datasetObj['รายละเอียด Type 4'] || '-'}</p>
             </div>
-            <h4 class="prompt-text" style="color: #4C1D95; margin: 20px 0 10px 0; font-size: 20px;">3. สรุปหัตถการและกิจกรรมพยาบาล</h4>
-            <table width="100%" border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; border-color: #CBD5E1; font-size: 18px;">
+
+            <h4 class="prompt-text" style="color: #4C1D95; margin: 20px 0 10px 0; font-size: 18px;">3. สรุปหัตถการและกิจกรรมพยาบาล</h4>
+            <table width="100%" border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; border-color: #CBD5E1;">
             `;
             let count = 0; html += `<tr>`;
             for(let key in r.datasetObj) {
@@ -878,7 +812,7 @@
             return html;
         }
 
-        // --- 6. HISTORY LOGIC ---
+        // --- 6. HISTORY & REGENERATE ---
         function renderDiaryRowsTable() {
             const tb = document.getElementById('diary-rows');
             tb.innerHTML = '';
@@ -888,12 +822,13 @@
             const sort = document.getElementById('hist-sort').value;
 
             let filtered = localDiaryStorage.filter(item => item.date >= start && item.date <= end);
+            
             if(filtered.length === 0) return tb.innerHTML = `<tr><td colspan="4" align="center">ไม่มีข้อมูลในช่วงเวลาที่เลือก</td></tr>`;
 
             const shiftOrder = { "ดึก": 1, "เช้า": 2, "บ่าย": 3 };
             filtered.sort((a, b) => {
                 let dateDiff = a.date > b.date ? -1 : (a.date < b.date ? 1 : 0);
-                if(sort === 'asc') dateDiff = dateDiff * -1;
+                if(sort === 'asc') dateDiff = dateDiff * -1; // reverse
                 if(dateDiff === 0) return shiftOrder[a.shift] - shiftOrder[b.shift];
                 return dateDiff;
             });
@@ -901,7 +836,7 @@
             filtered.forEach(r => {
                 tb.innerHTML += `<tr>
                     <td>${r.date}</td>
-                    <td><span style="background: #E2E8F0; padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 14px;">${r.shift}</span></td>
+                    <td><span class="badge shift-${r.shift}">${r.shift}</span></td>
                     <td>${r.rn}</td>
                     <td>
                         <button class="btn btn-primary" style="padding:6px 10px; font-size:14px;" onclick="viewPreview(${r.uid})">ดูตัวอย่าง</button>
@@ -929,13 +864,13 @@
             showModal('ยืนยันการลบ', 'ลบประวัติเวรนี้?', 'warning', () => {
                 localDiaryStorage = localDiaryStorage.filter(item => item.uid !== uid);
                 localStorage.setItem('ipd3_diary_storage', JSON.stringify(localDiaryStorage));
-                renderDiaryRowsTable(); updateDashboard(); updateSummaryTable(); updateRiskReviewTable();
+                renderDiaryRowsTable(); updateDashboard();
             });
         }
 
         function viewPreview(uid) {
             const r = localDiaryStorage.find(i => i.uid === uid);
-            let html = `<div style="text-align:left; font-size:18px; line-height: 1.8;">` + buildTemplateHTML(r) + `</div>`;
+            let html = `<div style="text-align:left; font-size:16px; line-height: 1.8;">` + buildTemplateHTML(r) + `</div>`;
             showModal(`ดูข้อมูลเวร ${r.shift} วันที่ ${r.date}`, html, 'info');
             document.getElementById('modalDesc').innerHTML = html;
         }
@@ -955,7 +890,8 @@
             setTimeout(async () => {
                 try {
                     const canvas = await html2canvas(renderDiv, { scale: 2 });
-                    renderDiv.style.left = "-9999px"; closeModal();
+                    renderDiv.style.left = "-9999px"; 
+                    closeModal();
                     
                     if(type === 'jpeg') {
                         let link = document.createElement('a'); link.download = `IPD_${r.date}_${r.shift}.jpg`;
@@ -970,7 +906,7 @@
             }, 500);
         }
 
-        // --- 7. DASHBOARD & SUMMARY TABLE ---
+        // --- 7. DASHBOARD (HOME) ---
         let myChart = null;
         function updateDashboard() {
             document.getElementById('home-date').innerText = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
@@ -982,6 +918,34 @@
                 document.getElementById('home-incident').innerText = latest.datasetObj['อุบัติการณ์'] || 'เหตุการณ์ทั่วไปปกติ';
             }
 
+            const sumBody = document.getElementById('event-summary-body');
+            sumBody.innerHTML = '';
+            localDiaryStorage.forEach(item => {
+                let inc = item.datasetObj['อุบัติการณ์'] || '-';
+                let ref = item.datasetObj['รายละเอียด Refer'] || '-';
+                let t4 = item.datasetObj['รายละเอียด Type 4'] || '-';
+                let dText = item.datasetObj['รายละเอียด Dead'] || '-';
+
+                let isRef = (item.datasetObj['ส่งต่อ'] > 0);
+                let isDead = (item.datasetObj['ตาย'] > 0);
+                let isT4 = (item.datasetObj['ประเภท 4'] > 0);
+                
+                if(inc !== 'เหตุการณ์ทั่วไปปกติ' || isRef || isDead || isT4) {
+                    sumBody.innerHTML += `
+                        <tr style="cursor: pointer;" onclick="editRecord(${item.uid})">
+                            <td>${item.date}</td>
+                            <td><span class="badge shift-${item.shift}">${item.shift}</span></td>
+                            <td><div class="tooltip-container">${inc !== 'เหตุการณ์ทั่วไปปกติ' ? 'ดูรายละเอียด' : '-'}<span class="tooltip-text">${inc}</span></div></td>
+                            <td><div class="tooltip-container">${isRef ? 'ดูรายละเอียด' : '-'}<span class="tooltip-text">${ref}</span></div></td>
+                            <td><div class="tooltip-container">${isT4 ? 'ดูรายละเอียด' : '-'}<span class="tooltip-text">${t4}</span></div></td>
+                            <td><div class="tooltip-container">${isDead ? 'ดูรายละเอียด' : '-'}<span class="tooltip-text">${dText}</span></div></td>
+                        </tr>
+                    `;
+                }
+            });
+            if(sumBody.innerHTML === '') sumBody.innerHTML = '<tr><td colspan="6" align="center">ไม่มีเหตุการณ์สำคัญ</td></tr>';
+
+            // Chart
             const start = document.getElementById('dash-start').value;
             const end = document.getElementById('dash-end').value;
             const type = document.getElementById('dash-type').value;
@@ -1011,149 +975,7 @@
             }
         }
 
-        // Summary 4 Items with Filter
-        function updateSummaryTable() {
-            const start = document.getElementById('sum-start').value;
-            const end = document.getElementById('sum-end').value;
-            const filterType = document.getElementById('sum-incident').value;
-            const sumBody = document.getElementById('event-summary-body');
-            sumBody.innerHTML = '';
-            
-            let filtered = localDiaryStorage.filter(item => {
-                if(start && end) return (item.date >= start && item.date <= end);
-                return true;
-            });
-
-            let countFound = 0;
-            filtered.forEach(item => {
-                let inc = item.datasetObj['อุบัติการณ์'] || '-';
-                let ref = item.datasetObj['รายละเอียด Refer'] || '-';
-                let t4 = item.datasetObj['รายละเอียด Type 4'] || '-';
-                let dText = item.datasetObj['รายละเอียด Dead'] || '-';
-
-                let isRef = (item.datasetObj['ส่งต่อ'] > 0);
-                let isDead = (item.datasetObj['ตาย'] > 0);
-                let isT4 = (item.datasetObj['ประเภท 4'] > 0);
-                let isRisk = (inc !== 'เหตุการณ์ทั่วไปปกติ' || isRef || isDead || isT4);
-                
-                let match = true;
-                if(filterType === 'risk' && !isRisk) match = false;
-                if(filterType === 'normal' && isRisk) match = false;
-
-                if(match) {
-                    countFound++;
-                    sumBody.innerHTML += `
-                        <tr style="cursor: pointer;" onclick="editRecord(${item.uid})">
-                            <td>${item.date}</td>
-                            <td><span style="background: #E2E8F0; padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 14px;">${item.shift}</span></td>
-                            <td><div class="tooltip-container">${inc !== 'เหตุการณ์ทั่วไปปกติ' ? 'ดูรายละเอียด' : '-'}<span class="tooltip-text">${inc}</span></div></td>
-                            <td><div class="tooltip-container">${isRef ? 'ดูรายละเอียด' : '-'}<span class="tooltip-text">${ref}</span></div></td>
-                            <td><div class="tooltip-container">${isT4 ? 'ดูรายละเอียด' : '-'}<span class="tooltip-text">${t4}</span></div></td>
-                            <td><div class="tooltip-container">${isDead ? 'ดูรายละเอียด' : '-'}<span class="tooltip-text">${dText}</span></div></td>
-                        </tr>
-                    `;
-                }
-            });
-            if(countFound === 0) sumBody.innerHTML = '<tr><td colspan="6" align="center">ไม่มีข้อมูลตรงกับเงื่อนไขที่เลือก</td></tr>';
-        }
-
-        // --- 8. RISK MENU LOGIC ---
-        function switchRiskTab(tabId) {
-            document.querySelectorAll('#risk .sub-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('#risk .sub-nav-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            if(event) event.currentTarget.classList.add('active');
-            if(tabId === 'risk-review') updateRiskReviewTable();
-        }
-
-        function updateRiskReviewTable() {
-            const start = document.getElementById('risk-sum-start').value;
-            const end = document.getElementById('risk-sum-end').value;
-            const filterType = document.getElementById('risk-sum-incident').value;
-            const tbody = document.getElementById('risk-review-body');
-            tbody.innerHTML = '';
-            
-            let filtered = localDiaryStorage.filter(item => {
-                if(start && end) return (item.date >= start && item.date <= end);
-                return true;
-            });
-
-            let countFound = 0;
-            filtered.forEach(item => {
-                let inc = item.datasetObj['อุบัติการณ์'] || '-';
-                let ref = item.datasetObj['รายละเอียด Refer'] || '-';
-                let t4 = item.datasetObj['รายละเอียด Type 4'] || '-';
-                let dText = item.datasetObj['รายละเอียด Dead'] || '-';
-
-                let isRef = (item.datasetObj['ส่งต่อ'] > 0);
-                let isDead = (item.datasetObj['ตาย'] > 0);
-                let isT4 = (item.datasetObj['ประเภท 4'] > 0);
-                let isRisk = (inc !== 'เหตุการณ์ทั่วไปปกติ' || isRef || isDead || isT4);
-                
-                let match = true;
-                if(filterType === 'risk' && !isRisk) match = false;
-                if(match) {
-                    countFound++;
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${item.date}</td>
-                            <td><span style="background: #E2E8F0; padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 14px;">${item.shift}</span></td>
-                            <td>${inc}</td>
-                            <td>${isRef ? ref : '-'}</td>
-                            <td>${isT4 ? t4 : '-'}</td>
-                            <td>${isDead ? dText : '-'}</td>
-                        </tr>
-                    `;
-                }
-            });
-            if(countFound === 0) tbody.innerHTML = '<tr><td colspan="6" align="center">ไม่มีข้อมูลความเสี่ยงในช่วงเวลานี้</td></tr>';
-        }
-
-        async function exportRiskPDF() {
-            const target = document.getElementById('risk-export-target');
-            showModal('กำลังสร้างไฟล์ PDF...', 'รอสักครู่ ระบบกำลังจัดทำรายงานทบทวนอุบัติการณ์...', 'info');
-            setTimeout(async () => {
-                try {
-                    const canvas = await html2canvas(target, { scale: 2 });
-                    const img = canvas.toDataURL('image/jpeg', 1.0);
-                    const { jsPDF } = window.jspdf; 
-                    const pdf = new jsPDF('l', 'mm', 'a4'); // แนวนอน (Landscape) จะได้กว้างๆ
-                    const w = pdf.internal.pageSize.getWidth(); 
-                    const h = (canvas.height * w) / canvas.width;
-                    pdf.addImage(img, 'JPEG', 0, 0, w, h); 
-                    pdf.save(`Risk_Review_${document.getElementById('risk-sum-start').value}.pdf`);
-                    closeModal();
-                } catch(e) { alert("Error PDF: " + e); closeModal(); }
-            }, 500);
-        }
-
-        function exportRiskCSV() {
-            const start = document.getElementById('risk-sum-start').value;
-            const end = document.getElementById('risk-sum-end').value;
-            const filterType = document.getElementById('risk-sum-incident').value;
-            
-            let filtered = localDiaryStorage.filter(item => {
-                if(start && end) return (item.date >= start && item.date <= end);
-                return true;
-            });
-
-            let csv = "วันที่,เวร,อุบัติการณ์และความเสี่ยง,Case REFER,ผู้ป่วยประเภท 4,Case DEAD\n";
-            filtered.forEach(item => {
-                let isRisk = (item.datasetObj['อุบัติการณ์'] !== 'เหตุการณ์ทั่วไปปกติ' || item.datasetObj['ส่งต่อ'] > 0 || item.datasetObj['ตาย'] > 0 || item.datasetObj['ประเภท 4'] > 0);
-                if(filterType === 'all' || (filterType === 'risk' && isRisk)) {
-                    // escape comma in text using double quotes
-                    let inc = `"${(item.datasetObj['อุบัติการณ์'] || '-').replace(/"/g, '""')}"`;
-                    let ref = `"${(item.datasetObj['รายละเอียด Refer'] || '-').replace(/"/g, '""')}"`;
-                    let t4 = `"${(item.datasetObj['รายละเอียด Type 4'] || '-').replace(/"/g, '""')}"`;
-                    let dead = `"${(item.datasetObj['รายละเอียด Dead'] || '-').replace(/"/g, '""')}"`;
-                    csv += `${item.date},${item.shift},${inc},${ref},${t4},${dead}\n`;
-                }
-            });
-            const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Risk_Review.csv`; link.click();
-        }
-
-        // --- 9. SUMMARY EXPORT ---
+        // --- 8. EXPORT SUMMARY REPORT ---
         function generateSummaryReport() {
             const start = document.getElementById('exp-start').value;
             const end = document.getElementById('exp-end').value;
@@ -1165,6 +987,7 @@
                 return;
             }
 
+            // Sum all number fields
             let summary = {};
             document.querySelectorAll('.data-field').forEach(f => {
                 let lbl = f.getAttribute('data-label');
@@ -1176,9 +999,35 @@
             });
 
             let html = `<table class="data-table"><thead><tr><th>รายการกิจกรรมพยาบาล (รวม ${filtered.length} เวร)</th><th>ยอดรวม</th></tr></thead><tbody>`;
-            for(let key in summary) { html += `<tr><td>${key}</td><td style="font-weight:bold; color:#4C1D95;">${summary[key]}</td></tr>`; }
+            for(let key in summary) {
+                html += `<tr><td>${key}</td><td style="font-weight:bold; color:#4C1D95;">${summary[key]}</td></tr>`;
+            }
             html += `</tbody></table>`;
             document.getElementById('summary-table-container').innerHTML = html;
+        }
+
+        function exportData(type) {
+            const start = document.getElementById('exp-start').value;
+            const end = document.getElementById('exp-end').value;
+            if(!start || !end) return showModal('แจ้งเตือน', "กรุณาเลือกวันที่", 'warning');
+            
+            let filtered = localDiaryStorage.filter(item => item.date >= start && item.date <= end);
+            if(filtered.length === 0) return showModal('แจ้งเตือน', "ไม่มีข้อมูลในช่วงเวลาดังกล่าว", 'warning');
+
+            // Collect all number fields for CSV headers
+            let labels = [];
+            document.querySelectorAll('.data-field').forEach(f => {
+                let lbl = f.getAttribute('data-label');
+                if(lbl && f.type === 'number') labels.push(lbl);
+            });
+
+            if(type === 'csv') {
+                let csv = "วันที่,เวร," + labels.join(",") + "\n";
+                filtered.forEach(row => { csv += `${row.date},${row.shift},` + labels.map(l => row.datasetObj[l] || 0).join(",") + "\n"; });
+                const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob); link.download = `Summary_Report_${start}_${end}.csv`; link.click();
+            }
         }
 
         function resetForm() {
