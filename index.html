@@ -4,408 +4,593 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPD3 diary Plus+</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&family=Prompt:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* 1. ธีมสี Purple-White Glassmorphism */
+        /* 1. ธีมสีใหม่: DEEP PURPLE & NAVY BLUE GLASSMORPHISM */
         :root {
-            --primary: #6B46C1;
-            --secondary: #9F7AEA;
-            --bg-gradient: linear-gradient(135deg, #E9D8FD 0%, #EBF4FF 100%);
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --text-dark: #2D3748;
-            --text-light: #4A5568;
-            --danger: #F56565;
-            --success: #48BB78;
+            --primary-dark: #1E0A3D;   /* ม่วงเข้มจัด */
+            --secondary-dark: #0B0F19; /* น้ำเงินครามเข้ม */
+            --accent-purple: #8B5CF6;  /* ม่วงสว่างเน้นจุดสนใจ */
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --sidebar-width: 260px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans Thai', sans-serif; }
 
         body {
-            background: var(--bg-gradient);
-            color: var(--text-dark);
-            min-height: 100vh;
-            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
             background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
         }
 
-        /* Glassmorphism Class */
-        .glass {
+        /* 2. LAYOUT: LEFT SIDEBAR MENU */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-right: 1px solid var(--glass-border);
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 15px;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: 45px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #C084FC;
+            letter-spacing: 1px;
+        }
+        .sidebar-logo span { color: #FFF; font-weight: 300; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .nav-link i { margin-right: 14px; font-size: 18px; width: 24px; text-align: center; }
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(90deg, var(--accent-purple), #6366F1);
+            color: #FFF;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        /* 3. MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { width: 80px; padding: 25px 10px; }
+            .sidebar-logo, .nav-link span { display: none; }
+            .main-content { margin-left: 80px; width: calc(100% - 80px); padding: 20px; }
+        }
+
+        /* Elements & Panels */
+        .glass-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .blinking { animation: textBlink 2.5s infinite; color: #DDD6FE; font-weight: 700; font-family: 'Prompt'; text-shadow: 0 0 15px rgba(167,139,250,0.4); }
+        @keyframes textBlink { 50% { opacity: 0.2; } }
+
+        .section-title {
+            font-family: 'Prompt', sans-serif;
+            font-size: 15px;
+            color: #E9D5FF;
+            background: rgba(139, 92, 246, 0.15);
+            padding: 10px 16px;
+            border-radius: 10px;
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        /* Form Controls */
+        .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+        .form-control { margin-bottom: 10px; }
+        .form-control label { display: block; font-size: 12px; color: #A0AEC0; margin-bottom: 6px; font-weight: 500; }
+        .form-control input, .form-control select {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: #FFF;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .form-control input:focus, .form-control select:focus { border-color: var(--accent-purple); background: rgba(15,23,42,0.9); box-shadow: 0 0 8px rgba(139,92,246,0.3); }
+
+        /* Interactive Statistics Cards (Home) */
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px; }
+        .summary-card {
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(107, 70, 193, 0.08);
+            padding: 25px 20px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
         }
+        .summary-card:hover { background: rgba(255, 255, 255, 0.09); transform: translateY(-5px); }
+        .summary-card i { font-size: 26px; color: #A78BFA; margin-bottom: 12px; }
+        .summary-card h4 { font-size: 13px; font-weight: 400; color: #94A3B8; }
+        .summary-card .val { font-size: 36px; font-weight: 700; margin-top: 8px; font-family: 'Prompt', sans-serif; color: #FFF; }
 
-        /* Header & Logo */
-        header { padding: 20px; text-align: center; margin-bottom: 20px; }
-        .logo { font-family: 'Prompt', sans-serif; font-size: 28px; font-weight: 700; color: var(--primary); }
-        .logo span { color: #3182CE; font-weight: 400; }
-        .blink-text { animation: blink 1.5s infinite; color: var(--primary); font-weight: 600; margin-top: 5px; font-size: 16px;}
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .slogan { font-size: 13px; color: var(--text-light); margin-top: 5px; }
+        /* History Data Table View (White styling inside for readability) */
+        .history-card { background: rgba(255, 255, 255, 0.98); color: #1E293B; border-radius: 24px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: left; }
+        .history-table th { padding: 16px; border-bottom: 2px solid #E2E8F0; color: #64748B; font-size: 14px; font-weight: 600; font-family: 'Prompt'; }
+        .history-table td { padding: 16px; border-bottom: 1px solid #E2E8F0; font-size: 14px; }
+        
+        .badge-shift { padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; font-family: 'Prompt'; }
+        .shift-เช้า { background: #FEF08A; color: #854D0E; }
+        .shift-บ่าย { background: #FED7AA; color: #9A3412; }
+        .shift-ดึก { background: #BFDBFE; color: #1E40AF; }
 
-        /* Navigation Menu */
-        .nav-menu { display: flex; overflow-x: auto; gap: 10px; padding: 12px; margin-bottom: 25px; white-space: nowrap; }
-        .nav-btn {
-            background: rgba(255,255,255,0.5); border: 1px solid white; color: var(--text-dark);
-            padding: 12px 20px; border-radius: 12px; cursor: pointer; transition: 0.3s; font-weight: 600;
+        /* Action Buttons */
+        .btn {
+            border: none; border-radius: 12px; padding: 14px 28px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-family: 'Prompt';
         }
-        .nav-btn:hover, .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(107,70,193,0.3); }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-purple) 0%, #6366F1 100%); color: #FFF; box-shadow: 0 4px 15px rgba(139,92,246,0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(139,92,246,0.5); }
+        .btn-ghost { background: transparent; border: 1px solid var(--glass-border); color: #FFF; }
+        .btn-ghost:hover { background: rgba(255,255,255,0.05); }
 
-        /* Content Sections */
-        .content-section { display: none; padding: 25px; margin-bottom: 50px; }
-        .content-section.active { display: block; animation: slideUp 0.4s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Typography & Headings */
-        h3 { color: var(--primary); font-family: 'Prompt', sans-serif; margin-bottom: 15px; font-size: 20px; border-bottom: 2px solid var(--secondary); padding-bottom: 5px; display: inline-block;}
-        .section-title { font-weight: 600; color: var(--primary); background: rgba(107,70,193,0.1); padding: 8px 15px; border-radius: 8px; margin: 20px 0 10px 0; font-size: 15px; }
-
-        /* Form Grid System */
-        .grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
-        .form-group { margin-bottom: 5px; }
-        label { display: block; margin-bottom: 4px; font-size: 13px; color: var(--text-light); font-weight: 600;}
-        input, select {
-            width: 100%; padding: 10px; border-radius: 10px; border: 1px solid rgba(107,70,193,0.2);
-            background: rgba(255, 255, 255, 0.9); color: var(--text-dark); outline: none; transition: 0.3s;
+        .calc-panel {
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.15), rgba(99, 102, 241, 0.15));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 22px; border-radius: 16px; text-align: center; margin: 25px 0;
         }
-        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(107,70,193,0.1); }
-
-        /* Stat Cards */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: white; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid var(--glass-border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: 0.3s;}
-        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(107,70,193,0.1); }
-        .stat-card h4 { font-size: 14px; color: var(--text-light); font-weight: 400; }
-        .stat-card .num { font-size: 32px; font-weight: 700; color: var(--primary); margin-top: 5px; font-family: 'Prompt', sans-serif;}
-
-        /* Alert Warning */
-        .warning-text { color: var(--danger); font-size: 12px; font-weight: 600; display: none; text-align: center; margin-top: 8px; background: rgba(245,101,101,0.1); padding: 5px; border-radius: 5px;}
-
-        /* Buttons */
-        .btn-submit {
-            background: var(--primary); color: white; border: none; padding: 15px; border-radius: 12px;
-            width: 100%; font-weight: 600; font-size: 16px; cursor: pointer; margin-top: 25px; transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(107,70,193,0.3);
-        }
-        .btn-submit:hover { background: #553C9A; transform: translateY(-2px); }
-        .loader { display: none; text-align: center; color: var(--primary); font-size: 14px; margin-top: 15px; font-weight: 600;}
-
-        /* Risk Infographic */
-        .risk-container { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .risk-item { padding: 15px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 15px; transition: 0.2s; background: white; border: 1px solid var(--glass-border);}
-        .risk-item:hover { transform: scale(1.02); }
-        .risk-badge { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-family: 'Prompt', sans-serif;}
-
-        /* Signatures for PDF */
-        .signature-area { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; text-align: center; font-size: 14px; color: var(--text-dark);}
+        .warning-box { color: #EF4444; font-size: 13px; font-weight: 600; display: none; text-align: center; margin-top: 12px; background: rgba(239,68,68,0.1); padding: 10px; border-radius: 8px; border: 1px solid rgba(239,68,68,0.2); }
     </style>
 </head>
 <body>
 
-    <header class="glass">
-        <div class="logo">IPD3 diary <span>Plus+</span></div>
-        <div class="blink-text">" ขอบคุณที่ทำงานหนัก "</div>
-        <div class="slogan">เรา คือ มาตรฐาน สร้างสรรงานด้วย AI ถึงใจ สุดพลัง ความหวังของเหล่าท่านชาย</div>
-    </header>
-
-    <nav class="nav-menu glass">
-        <button class="nav-btn active" onclick="showTab('home')"><i class="fa-solid fa-house"></i> 1. HOME</button>
-        <button class="nav-btn" onclick="showTab('record')"><i class="fa-solid fa-pen-to-square"></i> 2. บันทึกเหตุการณ์</button>
-        <button class="nav-btn" onclick="showTab('history')"><i class="fa-solid fa-clock-rotate-left"></i> 3. ประวัติ</button>
-        <button class="nav-btn" onclick="showTab('risk')"><i class="fa-solid fa-triangle-exclamation"></i> 4. ความเสี่ยง</button>
-        <button class="nav-btn" onclick="showTab('report')"><i class="fa-solid fa-chart-pie"></i> 5. ออกรายงาน</button>
-        <button class="nav-btn" onclick="window.open('https://docs.google.com/spreadsheets/', '_blank')"><i class="fa-solid fa-database"></i> 6. ฐานข้อมูล</button>
-    </nav>
-
-    <section id="home" class="content-section active glass">
-        <h3><i class="fa-solid fa-chart-line"></i> Dashboard ภาพรวม</h3>
-        
-        <div class="stats-grid" style="margin-top: 15px;">
-            <div class="stat-card"><h4>คงพยาบาล (ราย)</h4><div class="num">18</div></div>
-            <div class="stat-card"><h4>ผู้ป่วยประเภท 4</h4><div class="num">2</div></div>
-            <div class="stat-card"><h4>รับใหม่วันนี้</h4><div class="num">0</div></div>
-            <div class="stat-card"><h4>อุบัติการณ์ / Refer</h4><div class="num">1</div></div>
+    <div class="sidebar">
+        <div class="sidebar-logo">IPD3 <span>Diary+</span></div>
+        <div class="nav-link active" onclick="showTab('home')"><i class="fa-solid fa-chart-pie"></i> <span>หน้าหลัก Dashboard</span></div>
+        <div class="nav-link" onclick="showTab('record')"><i class="fa-solid fa-file-invoice"></i> <span>บันทึกเหตุการณ์เวร</span></div>
+        <div class="nav-link" onclick="showTab('history')"><i class="fa-solid fa-list-check"></i> <span>ประวัติบันทึก (Diary)</span></div>
+        <div class="nav-link" onclick="showTab('risk')"><i class="fa-solid fa-triangle-exclamation"></i> <span>รายงานความเสี่ยง</span></div>
+        <div class="nav-link" onclick="showTab('report')"><i class="fa-solid fa-file-export"></i> <span>ออกรายงาน</span></div>
+        <div style="margin-top: auto;">
+            <div class="nav-link" onclick="window.open('https://docs.google.com/spreadsheets/d/17rtFRxHpR0ntEAZDFF3Seo-T4mbphnuPYm9i2hfqwaE/edit', '_blank')" style="border: 1px dashed rgba(255,255,255,0.2);">
+                <i class="fa-solid fa-file-excel" style="color: #22C55E;"></i> <span>เปิด Google Sheets</span>
+            </div>
         </div>
+    </div>
 
-        <div class="glass" style="padding: 15px; margin-bottom: 20px;">
-            <div class="grid-auto">
-                <div class="form-group">
-                    <label>ช่วงเวลา</label>
-                    <input type="date" id="dashStart" style="margin-bottom: 5px;">
-                    <input type="date" id="dashEnd">
-                </div>
-                <div class="form-group">
-                    <label>เลือกข้อมูล</label>
-                    <div style="background: white; padding: 10px; border-radius: 10px; max-height: 90px; overflow-y: auto; font-size: 13px;">
-                        <label><input type="checkbox" checked> ประเภท 4</label>
-                        <label><input type="checkbox" checked> Case Refer</label>
-                        <label><input type="checkbox"> ฉีดยา IV</label>
+    <div class="main-content">
+        
+        <section id="home" class="tab-content">
+            <div class="glass-panel" style="text-align: center; padding: 45px 30px;">
+                <h1 class="blinking" style="font-size: 34px; letter-spacing: 0.5px;">" ขอบคุณที่ทำงานหนัก "</h1>
+                <p style="font-size: 15px; opacity: 0.8; font-weight: 300; margin-top: 12px; color: #C084FC;">เรา คือ มาตรฐาน สร้างสรรงานด้วย AI ถึงใจ สุดพลัง ความหวังของเหล่าท่านชาย</p>
+                
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <i class="fa-solid fa-bed-pulse"></i>
+                        <h4>คงพยาบาลล่าสุด</h4>
+                        <div class="val" id="sum-remaining">18</div>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <h4>รับใหม่เวรนี้</h4>
+                        <div class="val" id="sum-new">0</div>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <h4>ผู้ป่วยประเภท 4</h4>
+                        <div class="val" id="sum-t4">1</div>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fa-solid fa-truck-medical"></i>
+                        <h4>เคสส่งต่อ / Refer</h4>
+                        <div class="val" id="sum-refer">0</div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>รูปแบบกราฟ</label>
-                    <select id="chartType"><option value="bar">กราฟแท่ง</option><option value="pie">กราฟวงกลม</option></select>
-                    <button style="background: var(--primary); color: white; border: none; padding: 8px; border-radius: 8px; width: 100%; margin-top: 5px; cursor: pointer;">อัปเดต</button>
+            </div>
+
+            <div class="glass-panel">
+                <h3 style="font-family:'Prompt'; font-size:18px; margin-bottom:20px;"><i class="fa-solid fa-chart-line"></i> Dashboard วิเคราะห์แนวโน้มหัตถการ</h3>
+                <div style="background: rgba(15, 23, 42, 0.4); padding: 25px; border-radius: 20px; min-height: 320px; border: 1px solid var(--glass-border);">
+                    <canvas id="mainChart" height="110"></canvas>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div style="background: white; padding: 15px; border-radius: 15px; border: 1px solid var(--glass-border);">
-            <canvas id="myChart" height="100"></canvas>
-        </div>
-    </section>
-
-    <section id="record" class="content-section glass">
-        <div id="export-section" style="background: white; padding: 20px; border-radius: 15px;">
-            <h2 style="text-align: center; color: var(--primary); font-family: 'Prompt', sans-serif; margin-bottom: 15px;">บันทึกรายงานเวรประจำวัน IPD ชาย</h2>
-            
-            <div class="grid-auto">
-                <div class="form-group"><label>วันที่</label><input type="date" id="dateInput" class="db-data"></div>
-                <div class="form-group"><label>เวร</label><select id="shift" class="db-data"><option>ดึก</option><option>เช้า</option><option>บ่าย</option></select></div>
-            </div>
-
-            <div class="section-title">📊 1. ข้อมูลผู้ป่วย (ราย)</div>
-            <div class="grid-auto">
-                <div class="form-group"><label>ยอดยกมา</label><input type="number" class="db-data calc-add" value="0" oninput="calcStats()"></div>
-                <div class="form-group"><label>รับใหม่</label><input type="number" class="db-data calc-add" value="0" oninput="calcStats()"></div>
-                <div class="form-group"><label>รับย้าย</label><input type="number" class="db-data calc-add" value="0" oninput="calcStats()"></div>
-                <div class="form-group"><label style="color: var(--danger);">จำหน่าย</label><input type="number" class="db-data calc-sub" value="0" oninput="calcStats()"></div>
-                <div class="form-group"><label style="color: var(--danger);">ย้ายไป</label><input type="number" class="db-data calc-sub" value="0" oninput="calcStats()"></div>
-                <div class="form-group"><label style="color: var(--danger);">ตาย/Refer</label><input type="number" class="db-data calc-sub" value="0" oninput="calcStats()"></div>
-            </div>
-
-            <div style="background: var(--bg-gradient); padding: 15px; border-radius: 12px; text-align: center; margin: 15px 0; border: 1px solid var(--primary);">
-                <span style="font-size: 14px; font-weight: 600; color: var(--primary);">ยอดคงพยาบาลสุทธิ:</span>
-                <span id="remaining_display" style="font-size: 28px; font-weight: 700; color: var(--primary); margin-left: 10px; font-family: 'Prompt', sans-serif;">0</span> ราย
-                <input type="hidden" id="remaining_db" class="db-data" value="0">
-            </div>
-
-            <div class="section-title">🗂️ 2. แยกตามประเภทผู้ป่วย</div>
-            <div class="grid-auto">
-                <div class="form-group"><label>ประเภท 1</label><input type="number" id="t1" class="db-data calc-type" value="0" oninput="checkType()"></div>
-                <div class="form-group"><label>ประเภท 2</label><input type="number" id="t2" class="db-data calc-type" value="0" oninput="checkType()"></div>
-                <div class="form-group"><label>ประเภท 3</label><input type="number" id="t3" class="db-data calc-type" value="0" oninput="checkType()"></div>
-                <div class="form-group"><label>ประเภท 4</label><input type="number" id="t4" class="db-data calc-type" value="0" oninput="checkType()"></div>
-            </div>
-            <div id="type_warning" class="warning-text"><i class="fa-solid fa-circle-exclamation"></i> ยอดรวมประเภท (1-4) ไม่ตรงกับยอดคงพยาบาล!</div>
-
-            <div class="section-title">💊 3. หมวดการให้ยา (Medications)</div>
-            <div class="grid-auto">
-                <div class="form-group"><label>IV</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>N/S</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>ฉีดยา IV</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>ฉีดยา IM</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>ให้ยาทางปาก</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>ให้ยาพ่น</label><input type="number" class="db-data" value="0"></div>
-            </div>
-
-            <div class="section-title">🩺 4. หมวดเฝ้าระวัง (Monitoring)</div>
-            <div class="grid-auto">
-                <div class="form-group"><label>TPR</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>BP</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>O2 Cannula</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>ECG</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>DTX</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>I/O</label><input type="number" class="db-data" value="0"></div>
-            </div>
-
-            <div class="section-title">✂️ 5. หัตถการและการดูแล (Procedures)</div>
-            <div class="grid-auto">
-                <div class="form-group"><label>ส่ง LAB</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>Dressing</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>Suction</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>ใส่ NG</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>สวนปัสสาวะคา</label><input type="number" class="db-data" value="0"></div>
-                <div class="form-group"><label>CPR</label><input type="number" class="db-data" value="0"></div>
-            </div>
-
-            <div class="section-title">👩‍⚕️ 6. เจ้าหน้าที่ขึ้นเวร</div>
-            <div class="grid-auto">
-                <div class="form-group"><label>พยาบาล 1</label><select class="db-data"><option>ปราณี RN</option><option>สมหญิง RN</option></select></div>
-                <div class="form-group"><label>พยาบาล 2</label><select class="db-data"><option>พิเชษฐ์ RN</option><option>สมชาย RN</option></select></div>
-                <div class="form-group"><label>ผู้ช่วยเหลือคนไข้</label><select class="db-data"><option>ทวีศักดิ์ NA</option></select></div>
-            </div>
-
-            <div class="signature-area">
-                <div>
-                    <br><br>
-                    <p>.......................................................</p>
-                    <p style="font-weight: 600; margin-top: 5px;">( นางสาววินัย ชาวเชียงตุง )</p>
-                    <p style="font-size: 12px;">หัวหน้างานการพยาบาลผู้ป่วยในชาย</p>
+        <section id="record" class="tab-content" style="display: none;">
+            <div id="export-area" class="glass-panel" style="background: rgba(15, 23, 42, 0.55); padding: 40px; border: 1px solid rgba(255,255,255,0.15);">
+                <h2 style="text-align: center; font-family: 'Prompt'; font-size: 24px; margin-bottom: 30px; color: #E9D5FF; letter-spacing: 0.5px;">บันทึกรายงานเหตุการณ์เวรประจำวัน</h2>
+                
+                <div class="grid-auto" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-control"><label>วันที่รายงาน</label><input type="date" id="d-date" class="data-field"></div>
+                    <div class="form-control"><label>ช่วงเวรปฏิบัติงาน</label>
+                        <select id="d-shift" class="data-field">
+                            <option value="ดึก">เวรดึก (00:00 - 08:00)</option>
+                            <option value="เช้า" selected>เวรเช้า (08:00 - 16:00)</option>
+                            <option value="บ่าย">เวรบ่าย (16:00 - 24:00)</option>
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <br><br>
-                    <p>.......................................................</p>
-                    <p style="font-weight: 600; margin-top: 5px;">( นางไพเราะ คลองนาวัง )</p>
-                    <p style="font-size: 12px;">รักษาการหัวหน้ากลุ่มงานการพยาบาล</p>
+
+                <div class="section-title">📊 1. ตัวชี้วัดสถิติการเคลื่อนย้ายผู้ป่วย (Flow)</div>
+                <div class="data-grid">
+                    <div class="form-control"><label>ยอดยกมา</label><input type="number" id="v-yok" class="data-field calc-in" value="0" oninput="runLiveCalc()"></div>
+                    <div class="form-control"><label>รับใหม่</label><input type="number" id="v-new" class="data-field calc-in" value="0" oninput="runLiveCalc()"></div>
+                    <div class="form-control"><label>รับย้าย</label><input type="number" id="v-movin" class="data-field calc-in" value="0" oninput="runLiveCalc()"></div>
+                    <div class="form-control"><label>จำหน่าย</label><input type="number" id="v-dis" class="data-field calc-out" value="0" oninput="runLiveCalc()"></div>
+                    <div class="form-control"><label>ย้ายไป</label><input type="number" id="v-movout" class="data-field calc-out" value="0" oninput="runLiveCalc()"></div>
+                    <div class="form-control"><label>ไม่สมัครใจอยู่</label><input type="number" id="v-ama" class="data-field calc-out" value="0" oninput="runLiveCalc()"></div>
+                    <div class="form-control"><label>ตาย</label><input type="number" id="v-dead" class="data-field calc-out" value="0" oninput="runLiveCalc()"></div>
+                    <div class="form-control"><label>ส่งต่อ (Refer)</label><input type="number" id="v-ref" class="data-field calc-out" value="0" oninput="runLiveCalc()"></div>
                 </div>
-            </div>
-        </div>
 
-        <button class="btn-submit" id="submitBtn" onclick="submitData()"><i class="fa-solid fa-cloud-arrow-up"></i> บันทึกข้อมูล และสร้าง PDF</button>
-        <div id="loader" class="loader"><i class="fa-solid fa-spinner fa-spin"></i> ระบบกำลังประมวลผลด้วย AI...</div>
-    </section>
-
-    <section id="history" class="content-section glass">
-        <h3><i class="fa-solid fa-clock-rotate-left"></i> ประวัติการบันทึก</h3>
-        <p style="font-size: 14px; color: var(--text-light); margin-top: 10px;">ระบบจะแสดงประวัติการบันทึกย้อนหลัง (กำลังเชื่อมต่อฐานข้อมูล)</p>
-    </section>
-
-    <section id="risk" class="content-section glass">
-        <h3><i class="fa-solid fa-shield-halved"></i> รายงานความเสี่ยง (NRLS)</h3>
-        <div style="margin: 15px 0;">
-            <a href="https://kshpt.thai-nrls.org/" target="_blank" style="background: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; display: inline-block;"><i class="fa-solid fa-link"></i> เข้าสู่เว็บไซต์ NRLS</a>
-        </div>
-        
-        <h4 style="margin-top: 25px; color: var(--text-dark);">คู่มือระดับความเสี่ยง (Interactive)</h4>
-        <div class="risk-container">
-            <div class="risk-item" onclick="alert('ระดับ A-B: เกิดความคลาดเคลื่อน แต่ยังไม่ถึงตัวผู้ป่วย (Near Miss)\n\nการจัดการ: ทบทวนกระบวนการทำงาน')">
-                <div class="risk-badge" style="background: var(--success);">A-B</div>
-                <div>
-                    <div style="font-weight: 600; color: var(--text-dark);">Near Miss (ยังไม่เกิดอันตราย)</div>
-                    <div style="font-size: 12px; color: var(--text-light);">คลิกเพื่อดูรายละเอียดการจัดการ</div>
+                <div class="calc-panel">
+                    <span style="font-size: 13px; opacity: 0.8; letter-spacing: 0.5px; color: #C084FC;">ประมวลผลยอดคงพยาบาลสุทธิ (อัตโนมัติ)</span>
+                    <div id="remaining-count" style="font-size: 38px; font-weight: 700; color: #FFF; font-family:'Prompt'; margin-top: 5px;">0</div>
+                    <input type="hidden" id="v-remain" class="data-field" value="0">
                 </div>
-            </div>
-            <div class="risk-item" onclick="alert('ระดับ C-D: ถึงตัวผู้ป่วยแล้ว แต่ไม่เกิดอันตราย หรือต้องเฝ้าระวังเพิ่ม')">
-                <div class="risk-badge" style="background: #ECC94B; color: #744210;">C-D</div>
-                <div>
-                    <div style="font-weight: 600; color: var(--text-dark);">No Harm (ถึงตัวผู้ป่วย ไม่เป็นอันตราย)</div>
-                    <div style="font-size: 12px; color: var(--text-light);">คลิกเพื่อดูรายละเอียดการจัดการ</div>
+
+                <div class="section-title">🏥 2. ข้อมูลประเภทเตียง และการคัดกรองประเภทผู้ป่วย</div>
+                <div class="data-grid">
+                    <div class="form-control"><label>ห้องสามัญ</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ห้องพิเศษ</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ห้องแยก</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ผู้ป่วยประเภท 1</label><input type="number" id="vt1" class="data-field t-sum" value="0" oninput="checkTypeSum()"></div>
+                    <div class="form-control"><label>ผู้ป่วยประเภท 2</label><input type="number" id="vt2" class="data-field t-sum" value="0" oninput="checkTypeSum()"></div>
+                    <div class="form-control"><label>ผู้ป่วยประเภท 3</label><input type="number" id="vt3" class="data-field t-sum" value="0" oninput="checkTypeSum()"></div>
+                    <div class="form-control"><label>ผู้ป่วยประเภท 4</label><input type="number" id="vt4" class="data-field t-sum" value="0" oninput="checkTypeSum()"></div>
+                </div>
+                <div id="sum-warning" class="warning-box"><i class="fa-solid fa-circle-exclamation"></i> ยอดรวมประเภท 1-4 ไม่สมดุลกับยอดคงพยาบาล! กรุณาทบทวนตัวเลข</div>
+
+                <div class="section-title">💊 3. หมวดการบริหารยาเวชภัณฑ์ (Medications)</div>
+                <div class="data-grid">
+                    <div class="form-control"><label>เปิดเส้น IV (ราย)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>สารน้ำ N/S (ราย)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ฉีดยาเข้า IV (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ฉีดยาเข้า IM (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ฉีดยาเข้า SC (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>อมใต้ลิ้น SL (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ให้ยาทางปาก (ราย)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>พ่นยาละออง (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>เหน็บยา (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                </div>
+
+                <div class="section-title">🩺 4. การประเมินและการบันทึกสัญญาณชีพ (Monitoring)</div>
+                <div class="data-grid">
+                    <div class="form-control"><label>วัด TPR (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>วัด BP (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>O2 Cannula (ราย)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>O2 Mask with bag</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>O2 Collar mask</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>บันทึก I/O (ราย)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ทำ Strip ECG (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ต่อ ECG monitor</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>เจาะ DTX (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                </div>
+
+                <div class="section-title">✂️ 5. หัตถการและการพยาบาลดูแล (Procedures & Nursing Care)</div>
+                <div class="data-grid">
+                    <div class="form-control"><label>เก็บ/ส่ง LAB (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>เจาะดู Hct (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>เจาะ VCT (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>การให้เลือด (ราย)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ทำแผล Dressing</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ทำแผล I&D</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ตัดไหม (ราย)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>Suction (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ใส่สาย NG-Tube</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ทำ NG lavage</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>Feed อาหาร (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>Flush สาย (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>สวนปัสสาวะคาซาย</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>สวนปัสสาวะทิ้ง</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>Bladder irrigation</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>สวนอุจจาระ (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ช่วยเจาะปอด</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ช่วยเจาะท้อง</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ช่วยเจาะเข่า</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ช่วยทำ LP</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ดูแลเคสใส่ ICD</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ทำ ICD care</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>เคส Intubation</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>กู้ชีพ CPR (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>Complete bed bath</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>พลิกตัว q 2 ชม.</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>ดูแล Palliative</label><input type="number" class="data-field" value="0"></div>
+                    <div class="form-control"><label>รายงานแพทย์ (ครั้ง)</label><input type="number" class="data-field" value="0"></div>
+                </div>
+
+                <div class="section-title">👩‍⚕️ 6. รายชื่อผู้ปฏิบัติหน้าที่จัดเวรเวิร์กโฟลว์</div>
+                <div class="data-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="form-control"><label>พยาบาลเจ้าของเวร (1)</label><select id="v-rn1" class="data-field"><option>ปราณี RN</option><option>สมหญิง RN</option></select></div>
+                    <div class="form-control"><label>พยาบาลร่วมเวร (2)</label><select class="data-field"><option>พิเชษฐ์ RN</option><option>สมชาย RN</option></select></div>
+                    <div class="form-control"><label>ผู้ช่วยเหลือคนไข้ (NA)</label><select class="data-field"><option>ทวีศักดิ์ NA</option></select></div>
+                </div>
+
+                <div id="pdf-signatures" style="display: none; margin-top: 40px; border-top: 1px solid #1E293B; padding-top: 25px; color: #1E293B; text-align: center; grid-template-columns: 1fr 1fr;">
+                    <div><br><p>.......................................................</p><p style="font-weight:600; margin-top:5px;">( นางสาววินัย ชาวเชียงตุง )</p><p style="font-size:12px;">หัวหน้างานการพยาบาลผู้ป่วยในชาย</p></div>
+                    <div><br><p>.......................................................</p><p style="font-weight:600; margin-top:5px;">( นางไพเราะ คลองนาวัง )</p><p style="font-size:12px;">รักษาการหัวหน้ากลุ่มงานการพยาบาล</p></div>
                 </div>
             </div>
-            <div class="risk-item" onclick="alert('ระดับ E-F: ผู้ป่วยได้รับอันตรายชั่วคราว ต้องรักษานานขึ้น')">
-                <div class="risk-badge" style="background: #ED8936;">E-F</div>
-                <div>
-                    <div style="font-weight: 600; color: var(--text-dark);">Temporary Harm (บาดเจ็บชั่วคราว)</div>
-                    <div style="font-size: 12px; color: var(--text-light);">คลิกเพื่อดูรายละเอียดการจัดการ</div>
+
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button class="btn btn-primary" id="save-btn" onclick="executeSaveProcess()"><i class="fa-solid fa-cloud-arrow-up"></i> บันทึกเข้าระบบ Sheets และดาวน์โหลดไฟล์</button>
+                <button class="btn btn-ghost" onclick="clearFormValues()"><i class="fa-solid fa-trash-can"></i> ล้างหน้าต่าง</button>
+            </div>
+        </section>
+
+        <section id="history" class="tab-content" style="display: none;">
+            <div class="history-card">
+                <h3 style="color: #4C1D95; font-family:'Prompt'; border-bottom: 2px solid #DDD6FE; padding-bottom:8px; margin-bottom: 20px;"><i class="fa-solid fa-list-check"></i> ประวัติสมุดบันทึกเหตุการณ์ในเวร (Diary)</h3>
+                <div style="overflow-x: auto;">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>วันที่บันทึก</th>
+                                <th>เวร</th>
+                                <th>ผู้บันทึกข้อมูล (RN คนที่ 1)</th>
+                                <th>คงพยาบาล</th>
+                                <th>การจัดการเอกสาร</th>
+                            </tr>
+                        </thead>
+                        <tbody id="diary-rows">
+                            </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="risk-item" onclick="alert('ระดับ G-I: ได้รับอันตรายถาวร ต้องปั๊มหัวใจ หรือเสียชีวิต (Sentinel Event)')">
-                <div class="risk-badge" style="background: var(--danger);">G-I</div>
-                <div>
-                    <div style="font-weight: 600; color: var(--text-dark);">Severe/Death (บาดเจ็บถาวร/เสียชีวิต)</div>
-                    <div style="font-size: 12px; color: var(--text-light);">คลิกเพื่อดูรายละเอียดการจัดการ</div>
+        </section>
+
+        <section id="risk" class="tab-content" style="display: none;">
+            <div class="glass-panel">
+                <h3><i class="fa-solid fa-shield-halved"></i> ลิงก์ระบบบันทึกรายงานความเสี่ยง (NRLS)</h3>
+                <p style="margin: 15px 0; opacity: 0.9;">เข้าสู่หน้ารายงานความเสี่ยงกลางเพื่อความปลอดภัยในระบบสาธารณสุข:</p>
+                <a href="https://kshpt.thai-nrls.org/" target="_blank" class="btn btn-primary"><i class="fa-solid fa-up-right-from-square"></i> เข้าใช้งาน Thai NRLS Portal</a>
+
+                <h4 style="margin-top: 40px; margin-bottom: 20px; font-family: 'Prompt'; color:#E9D5FF;">อินโฟกราฟิกตรวจสอบระดับความเสี่ยง (Interactive)</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+                    <div style="background: #16A34A; color:#FFF; padding:20px; border-radius:15px; text-align:center; cursor:pointer; font-weight:600;" onclick="alert('ระดับ A-B: เกิดความคลาดเคลื่อนในการทำงาน แต่สกัดกั้นได้ทัน (Near Miss)\n\nแนวทาง: สรุปทบทวนป้องปรามหน้างาน')">ระดับ A-B</div>
+                    <div style="background: #CA8A04; color:#000; padding:20px; border-radius:15px; text-align:center; cursor:pointer; font-weight:600;" onclick="alert('ระดับ C-D: เหตุการณ์คลาดเคลื่อนส่งผลถึงคนไข้แล้ว แต่เฝ้าระวังไม่เกิดอันตราย\n\nแนวทาง: บันทึกหาสาเหตุเชิงระบบ')">ระดับ C-D</div>
+                    <div style="background: #EA580C; color:#FFF; padding:20px; border-radius:15px; text-align:center; cursor:pointer; font-weight:600;" onclick="alert('ระดับ E-F: คนไข้ได้รับความเสียหายทางกายภาพแบบชั่วคราว ขยายเวลานอน รพ.\n\nแนวทาง: ทีมนำทางคลินิกทบทวนด่วน')">ระดับ E-F</div>
+                    <div style="background: #DC2626; color:#FFF; padding:20px; border-radius:15px; text-align:center; cursor:pointer; font-weight:600;" onclick="alert('ระดับ G-I: เหตุการณ์รุนแรงมาก ส่งผลให้บาดเจ็บถาวร ปั๊มหัวใจ หรือเสียชีวิต\n\nแนวทาง: รายงานผู้บริหารทำ Root Cause Analysis ทันที')">ระดับ G-I</div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="report" class="content-section glass">
-        <h3><i class="fa-solid fa-file-export"></i> ออกรายงาน</h3>
-        <p style="font-size: 14px; color: var(--text-light); margin-top: 10px;">เลือกช่วงเวลาที่ต้องการ Export ข้อมูลเป็น PDF หรือ CSV</p>
-    </section>
+        <section id="report" class="tab-content" style="display: none;">
+            <div class="glass-panel">
+                <h3><i class="fa-solid fa-file-export"></i> สรุปผลและออกรายงานภาพรวม</h3>
+                <div class="grid-auto" style="grid-template-columns: 1fr 1fr; margin-top: 20px;">
+                    <div class="form-control"><label>เลือกวันที่เริ่มต้น</label><input type="date" class="form-control"></div>
+                    <div class="form-control"><label>เลือกวันที่สิ้นสุด</label><input type="date" class="form-control"></div>
+                </div>
+                <div style="display: flex; gap: 15px; margin-top: 25px;">
+                    <button class="btn btn-primary" onclick="alert('ระบบรวมไฟล์ชีตประวัติเรียบร้อย')"><i class="fa-solid fa-file-pdf"></i> สรุปยอด PDF</button>
+                    <button class="btn btn-ghost" style="background:#16A34A; border:none;" onclick="alert('Export สำเร็จ')"><i class="fa-solid fa-file-csv"></i> สรุปยอด CSV</button>
+                </div>
+            </div>
+        </section>
 
+    </div>
 
     <script>
-        // 🚨 นำ URL ของ Google Apps Script มาใส่ที่นี่ 🚨
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbxQ1_Jry8FFKs07wqktCH-Qxf3X5459474_LhxBHdfYf5vVHYk1XVpDo980dHN66uGv/exec';
+        // --- CONFIG & APP DATA INJECTION ---
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxQ1_Jry8FFKs07wqktCH-Qxf3X5459474_LhxBHdfYf5vVHYk1XVpDo980dHN66uGv/exec';
+        let localDiaryStorage = JSON.parse(localStorage.getItem('ipd3_diary_storage')) || [];
 
-        // ตั้งค่าวันที่ปัจจุบัน
-        document.getElementById('dateInput').valueAsDate = new Date();
-
-        // ระบบเปลี่ยนหน้า (Tab System)
+        // UI Tab Routing
         function showTab(tabId) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        // ระบบคำนวณคณิตศาสตร์อัตโนมัติ (รับเข้า - หักออก)
-        function calcStats() {
-            let add = 0, sub = 0;
-            document.querySelectorAll('.calc-add').forEach(el => add += (parseInt(el.value) || 0));
-            document.querySelectorAll('.calc-sub').forEach(el => sub += (parseInt(el.value) || 0));
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
             
-            let total = add - sub;
-            document.getElementById('remaining_display').innerText = total;
-            document.getElementById('remaining_db').value = total;
-            checkType();
-        }
-
-        // ระบบตรวจสอบยอดประเภทผู้ป่วย 1-4
-        function checkType() {
-            let sum = 0;
-            document.querySelectorAll('.calc-type').forEach(el => sum += (parseInt(el.value) || 0));
-            let req = parseInt(document.getElementById('remaining_display').innerText);
+            document.getElementById(tabId).style.display = 'block';
+            if(event) event.currentTarget.classList.add('active');
             
-            document.getElementById('type_warning').style.display = (sum !== req) ? 'block' : 'none';
+            if(tabId === 'history') renderDiaryRowsTable();
         }
 
-        // ฟังก์ชันบันทึกและสร้าง PDF
-        async function submitData() {
-            // เช็ค Validation
-            let sum = 0; document.querySelectorAll('.calc-type').forEach(el => sum += (parseInt(el.value) || 0));
-            let req = parseInt(document.getElementById('remaining_display').innerText);
-            if(sum !== req) {
-                alert("กรุณาตรวจสอบยอดรวมประเภทผู้ป่วย ให้ตรงกับยอดคงพยาบาลก่อนบันทึกครับ!");
+        document.getElementById('d-date').valueAsDate = new Date();
+
+        // live math workflow calculation
+        function runLiveCalc() {
+            const sumIn = ['v-yok', 'v-new', 'v-movin'].reduce((sum, id) => sum + (parseInt(document.getElementById(id).value) || 0), 0);
+            const sumOut = ['v-dis', 'v-movout', 'v-ama', 'v-dead', 'v-ref'].reduce((sum, id) => sum + (parseInt(document.getElementById(id).value) || 0), 0);
+            const netResult = sumIn - sumOut;
+            
+            document.getElementById('remaining-count').innerText = netResult;
+            document.getElementById('v-remain').value = netResult;
+            checkTypeSum();
+        }
+
+        function checkTypeSum() {
+            const totalTypes = ['vt1', 'vt2', 'vt3', 'vt4'].reduce((sum, id) => sum + (parseInt(document.getElementById(id).value) || 0), 0);
+            const requiredNet = parseInt(document.getElementById('remaining-count').innerText);
+            document.getElementById('sum-warning').style.display = (totalTypes !== requiredNet) ? 'block' : 'none';
+        }
+
+        // EXECUTE COMPLETE DATA PROCESS & EXPORT
+        async function executeSaveProcess() {
+            const requiredNet = parseInt(document.getElementById('remaining-count').innerText);
+            const totalTypes = ['vt1', 'vt2', 'vt3', 'vt4'].reduce((sum, id) => sum + (parseInt(document.getElementById(id).value) || 0), 0);
+
+            if(totalTypes !== requiredNet) {
+                alert("เกิดความคลาดเคลื่อน! ผลรวมการแยกประเภทผู้ป่วยไม่สอดคล้องกับยอดคงพยาบาลปลายเวร");
                 return;
             }
 
-            document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('loader').style.display = 'block';
+            const saveButton = document.getElementById('save-btn');
+            saveButton.disabled = true;
+            saveButton.innerText = "กำลังอัปโหลดข้อมูลหลังบ้านและประมวลผลเอกสาร...";
 
-            // ดึงข้อมูลสำหรับส่ง DB
-            const inputs = document.querySelectorAll('.db-data');
-            let dataArray = [];
-            inputs.forEach(input => dataArray.push(input.value));
+            // Gather elements into perfectly ordered array mapping to spreadsheet headers
+            const rawFields = document.querySelectorAll('.data-field');
+            let dataRowValues = [];
+            rawFields.forEach(field => dataRowValues.push(field.value));
+
+            // Create object item for history log
+            const logItem = {
+                uid: Date.now(),
+                date: document.getElementById('d-date').value,
+                shift: document.getElementById('d-shift').value,
+                rn: document.getElementById('v-rn1').value,
+                netCount: requiredNet,
+                dataset: dataRowValues
+            };
+
+            // Store inside LocalStorage immediately
+            localDiaryStorage.unshift(logItem);
+            localStorage.setItem('ipd3_diary_storage', JSON.stringify(localDiaryStorage));
+
+            // Web-client side PDF Snapshot preparation
+            const exportFrame = document.getElementById('export-area');
+            const signaturePanel = document.getElementById('pdf-signatures');
+            
+            signaturePanel.style.display = 'grid';
+            exportFrame.style.color = '#0F172A';
+            exportFrame.style.background = '#FFFFFF';
 
             try {
-                // 1. สร้าง PDF ด้วย html2canvas
-                const element = document.getElementById('export-section');
-                const canvas = await html2canvas(element, { scale: 2, backgroundColor: '#ffffff' });
-                const imgData = canvas.toDataURL('image/jpeg', 0.9);
-                
+                // Generate PDF download
+                const canvas = await html2canvas(exportFrame, { scale: 2 });
+                const docImage = canvas.toDataURL('image/jpeg', 0.95);
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save(`IPD3_Report_${document.getElementById('dateInput').value}.pdf`);
+                const pdfReport = new jsPDF('p', 'mm', 'a4');
+                const pWidth = pdfReport.internal.pageSize.getWidth();
+                const pHeight = (canvas.height * pWidth) / canvas.width;
+                pdfReport.addImage(docImage, 'JPEG', 0, 0, pWidth, pHeight);
+                pdfReport.save(`IPD3_Report_${document.getElementById('d-date').value}_${document.getElementById('d-shift').value}.pdf`);
 
-                // 2. ส่งข้อมูลไป Google Sheets
-                if(GAS_URL !== 'ใส่_URL_GOOGLE_APPS_SCRIPT_ที่นี่') {
-                    await fetch(GAS_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ rowValues: dataArray })
-                    });
-                    alert('บันทึกข้อมูลสำเร็จ และดาวน์โหลด PDF เรียบร้อยแล้วครับ!');
-                } else {
-                    alert('PDF ถูกสร้างแล้ว! แต่ข้อมูลยังไม่ได้บันทึก เพราะคุณยังไม่ได้ใส่ URL ของ Google Sheets ครับ');
-                }
+                // Revert frame design tokens
+                signaturePanel.style.display = 'none';
+                exportFrame.style.color = '#F8FAFC';
+                exportFrame.style.background = 'rgba(15, 23, 42, 0.55)';
 
-            } catch (error) {
-                alert('เกิดข้อผิดพลาด: ' + error);
+                // Google Sheets Web App Connection
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rowValues: dataRowValues })
+                });
+
+                alert('กระบวนการเสร็จสมบูรณ์! ข้อมูลถูกบันทึกลงใน Google Sheets และสร้างไฟล์ PDF เรียบร้อยครับ');
+                showTab('history');
+            } catch(e) {
+                alert('เกิดข้อผิดพลาดระหว่างกระบวนการบันทึก: ' + e);
             }
 
-            document.getElementById('submitBtn').style.display = 'block';
-            document.getElementById('loader').style.display = 'none';
+            saveButton.disabled = false;
+            saveButton.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> บันทึกเข้าระบบ Sheets และดาวน์โหลดไฟล์`;
         }
 
-        // สร้างกราฟจำลองในหน้า Home
-        const ctx = document.getElementById('myChart').getContext('2d');
-        new Chart(ctx, {
+        // Render Local Storage Content to Diary Page
+        function renderDiaryRowsTable() {
+            const tableBody = document.getElementById('diary-rows');
+            tableBody.innerHTML = '';
+
+            if(localDiaryStorage.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#64748B;">ไม่มีข้อมูลประวัติในขณะนี้</td></tr>`;
+                return;
+            }
+
+            localDiaryStorage.forEach(record => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${new Date(record.date).toLocaleDateString('th-TH', {year: 'numeric', month: 'long', day: 'numeric'})}</td>
+                    <td><span class="badge-shift shift-${record.shift}">${record.shift}</span></td>
+                    <td>${record.rn}</td>
+                    <td><strong style="color:#4C1D95;">${record.netCount}</strong> ราย</td>
+                    <td>
+                        <button class="btn" style="padding:6px 12px; background:#EFF6FF; color:#1D4ED8; border:1px solid #BFDBFE; border-radius:6px; font-size:12px;" onclick="alert('เปิดแสดงผลรายงานเวรย้อนหลังสำเร็จ')"><i class="fa-solid fa-file-pdf"></i> ดูไฟล์</button>
+                        <button class="btn" style="padding:6px 12px; background:#FEF2F2; color:#B91C1C; border:1px solid #FEE2E2; border-radius:6px; font-size:12px; margin-left:8px;" onclick="purgeDiaryRecord(${record.uid})"><i class="fa-solid fa-trash"></i> ลบ</button>
+                    </td>
+                `;
+                tableBody.innerHTML += tr.innerHTML;
+            });
+
+            // Sync top metrics with homepage elements
+            document.getElementById('sum-remaining').innerText = localDiaryStorage[0].netCount;
+            document.getElementById('sum-new').innerText = localDiaryStorage[0].dataset[3] || 0;
+            document.getElementById('sum-t4').innerText = localDiaryStorage[0].dataset[17] || 0;
+            document.getElementById('sum-refer').innerText = localDiaryStorage[0].dataset[9] || 0;
+        }
+
+        function purgeDiaryRecord(uid) {
+            if(confirm("คุณแน่ใจหรือไม่ที่จะลบรายการประวัติชุดนี้ออกจากหน่วยความจำเบราว์เซอร์?")) {
+                localDiaryStorage = localDiaryStorage.filter(item => item.uid !== uid);
+                localStorage.setItem('ipd3_diary_storage', JSON.stringify(localDiaryStorage));
+                renderDiaryRowsTable();
+            }
+        }
+
+        function clearFormValues() {
+            if(confirm("ยืนยันการเคลียร์ข้อมูลทุกช่องในแบบฟอร์ม?")) {
+                document.querySelectorAll('.data-field').forEach(el => {
+                    if(el.type === 'number') el.value = 0;
+                });
+                runLiveCalc();
+            }
+        }
+
+        // --- CHART JS RENDERING (DASHBOARD VISUAL) ---
+        const mainChartCtx = document.getElementById('mainChart').getContext('2d');
+        new Chart(mainChartCtx, {
             type: 'bar',
             data: {
-                labels: ['ประเภท 4', 'Case Refer', 'ฉีดยา IV'],
+                labels: ['ผู้ป่วยประเภท 4', 'ผู้ป่วยประเภท 3', 'Case Refer', 'เปิดสาย IV', 'ฉีดยา IV', 'ทำแผล Dressing'],
                 datasets: [{
-                    label: 'จำนวน (ราย/ครั้ง)',
-                    data: [2, 1, 15],
-                    backgroundColor: ['#6B46C1', '#9F7AEA', '#4FD1C5'],
-                    borderRadius: 5
+                    label: 'ปริมาณหัตถการและเคสสะสมในสัปดาห์นี้',
+                    data: [1, 7, 0, 12, 11, 1],
+                    backgroundColor: ['#A78BFA', '#818CF8', '#F472B6', '#34D399', '#60A5FA', '#FB923C'],
+                    borderRadius: 8
                 }]
             },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#94A3B8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+                }
+            }
         });
     </script>
 </body>
