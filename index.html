@@ -88,7 +88,7 @@
         .home-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 35px; }
         .card { padding: 25px; border-radius: 16px; color: white; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.3s ease;}
         .card:hover { transform: translateY(-5px); }
-        .card-title { font-size: 18px; font-weight: 600; opacity: 0.9; margin-bottom: 10px; font-family: 'Sarabun', sans-serif;}
+        .card-title { font-size: 18px; font-weight: 600; opacity: 0.9; margin-bottom: 12px; font-family: 'Sarabun', sans-serif;}
         .card-value { font-size: 38px; font-weight: 700; font-family: 'Prompt', sans-serif; line-height: 1.2;}
         .card-bg-icon { position: absolute; right: -15px; bottom: -20px; font-size: 110px; opacity: 0.15; }
 
@@ -118,7 +118,7 @@
 
         /* SUB-TABS (RISK MENU) */
         .sub-nav { display: flex; gap: 10px; border-bottom: 2px solid #E2E8F0; margin-bottom: 25px; padding-bottom: 10px; overflow-x: auto; white-space: nowrap;}
-        .sub-nav-btn { background: transparent; border: none; color: #64748B; font-family: 'Prompt'; font-size: 16px; font-weight: 600; padding: 10px 20px; cursor: pointer; border-radius: 8px; transition: 0.3s;}
+        .sub-nav-btn { background: transparent; border: none; color: #64748B; font-family: 'Prompt', sans-serif; font-size: 16px; font-weight: 600; padding: 10px 20px; cursor: pointer; border-radius: 8px; transition: 0.3s;}
         .sub-nav-btn:hover { background: #F1F5F9; }
         .sub-nav-btn.active { background: rgba(147, 51, 234, 0.1); color: var(--accent-purple); }
         .sub-content { display: none; animation: fadeIn 0.4s; }
@@ -128,7 +128,7 @@
         /* MODAL */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); z-index: 2000; justify-content: center; align-items: center; }
         .modal-box { background: #FFF; border-radius: 16px; padding: 30px; width: 95%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: modalPop 0.3s ease-out; color: #1E293B;}
-        @keyframes modalPop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes modalPop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
         .marquee-container { width: 100%; overflow: hidden; white-space: nowrap; }
         .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; font-size: 20px; font-family: 'Prompt';}
@@ -175,7 +175,7 @@
                 </div>
                 <div class="card" style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);">
                     <div class="card-title">สถานะภาระงาน (เวรล่าสุด)</div>
-                    <div class="card-value" id="home-workload" style="font-size: 26px; margin-top: 10px;">ไม่มีข้อมูล</div>
+                    <div class="card-value prompt-text" id="home-workload" style="font-size: 26px; margin-top: 10px;">ไม่มีข้อมูล</div>
                     <i class="fa-solid fa-user-nurse card-bg-icon"></i>
                 </div>
                 <div class="card" style="background: linear-gradient(135deg, #20C997 0%, #059669 100%);" onclick="showTab('history')">
@@ -297,32 +297,32 @@
                     <p style="font-size: 14px; color: #64748B; margin-bottom: 10px;">* เมื่อเลือกหัวข้อใด ต้องระบุรายละเอียดในช่องที่ปรากฏขึ้นมาด้วย (บังคับ)</p>
                     <div class="incident-box">
                         <div class="incident-item">
-                            <label><input type="checkbox" class="inc-chk" value="อุบัติการณ์ ให้ยา/สารน้ำผิด"> ให้ยา/สารน้ำผิด</label>
-                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="อุบัติการณ์ ให้ยา/สารน้ำผิด">
+                            <label><input type="checkbox" class="inc-chk" value="ให้ยา/สารน้ำผิด"> ให้ยา/สารน้ำผิด</label>
+                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="ให้ยา/สารน้ำผิด">
                         </div>
                         <div class="incident-item">
-                            <label><input type="checkbox" class="inc-chk" value="อุบัติการณ์ จัดเตรียมยา/เตรียมสารน้ำผิด"> จัดเตรียมยา/สารน้ำผิด</label>
-                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="อุบัติการณ์ จัดเตรียมยา/เตรียมสารน้ำผิด">
+                            <label><input type="checkbox" class="inc-chk" value="จัดเตรียมยา/เตรียมสารน้ำผิด"> จัดเตรียมยา/สารน้ำผิด</label>
+                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="จัดเตรียมยา/เตรียมสารน้ำผิด">
                         </div>
                         <div class="incident-item">
-                            <label><input type="checkbox" class="inc-chk" id="chk-ama" value="อุบัติการณ์ปฏิเสธการรักษา"> ปฏิเสธการรักษา</label>
-                            <input type="text" id="desc-ama" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="อุบัติการณ์ปฏิเสธการรักษา">
+                            <label><input type="checkbox" class="inc-chk" id="chk-ama" value="ปฏิเสธการรักษา"> ปฏิเสธการรักษา</label>
+                            <input type="text" id="desc-ama" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="ปฏิเสธการรักษา">
                         </div>
                         <div class="incident-item">
-                            <label><input type="checkbox" class="inc-chk" value="อุบัติการณ์ผู้ป่วยหนีโรงพยาบาล"> ผู้ป่วยหนี รพ.</label>
-                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="อุบัติการณ์ผู้ป่วยหนีโรงพยาบาล">
+                            <label><input type="checkbox" class="inc-chk" value="ผู้ป่วยหนีโรงพยาบาล"> ผู้ป่วยหนี รพ.</label>
+                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="ผู้ป่วยหนีโรงพยาบาล">
                         </div>
                         <div class="incident-item">
-                            <label><input type="checkbox" class="inc-chk" value="อุบัติการณ์เจ้าหน้าที่ไม่เพียงพอ หรือเกี่ยวกับการจัดอัตรากำลัง"> จนท.ไม่เพียงพอ/อัตรากำลัง</label>
-                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="อุบัติการณ์เจ้าหน้าที่ไม่เพียงพอ หรือเกี่ยวกับการจัดอัตรากำลัง">
+                            <label><input type="checkbox" class="inc-chk" value="เจ้าหน้าที่ไม่เพียงพอ หรือเกี่ยวกับการจัดอัตรากำลัง"> จนท.ไม่เพียงพอ/อัตรากำลัง</label>
+                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="เจ้าหน้าที่ไม่เพียงพอ หรือเกี่ยวกับการจัดอัตรากำลัง">
                         </div>
                         <div class="incident-item">
-                            <label><input type="checkbox" class="inc-chk" value="อุบัติการณ์ด้านสิ่งแวดล้อม สถานที่ หรือสิ่งอำนวยความสะดวก"> สิ่งแวดล้อม/สถานที่</label>
-                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="อุบัติการณ์ด้านสิ่งแวดล้อม สถานที่ หรือสิ่งอำนวยความสะดวก">
+                            <label><input type="checkbox" class="inc-chk" value="ด้านสิ่งแวดล้อม สถานที่ หรือสิ่งอำนวยความสะดวก"> สิ่งแวดล้อม/สถานที่</label>
+                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="ด้านสิ่งแวดล้อม สถานที่ หรือสิ่งอำนวยความสะดวก">
                         </div>
                         <div class="incident-item">
-                            <label><input type="checkbox" class="inc-chk" value="อุบัติการณ์เกิดเหตุการณ์รุนแรง การใช้กำลัง และความเสี่ยงการฟ้องร้อง"> เหตุรุนแรง/ความเสี่ยงฟ้องร้อง</label>
-                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="อุบัติการณ์เกิดเหตุการณ์รุนแรง การใช้กำลัง และความเสี่ยงการฟ้องร้อง">
+                            <label><input type="checkbox" class="inc-chk" value="เกิดเหตุการณ์รุนแรง การใช้กำลัง และความเสี่ยงการฟ้องร้อง"> เหตุรุนแรง/ความเสี่ยงฟ้องร้อง</label>
+                            <input type="text" class="form-control incident-detail-input" placeholder="ระบุรายละเอียด..." data-key="เกิดเหตุการณ์รุนแรง การใช้กำลัง และความเสี่ยงการฟ้องร้อง">
                         </div>
                         <div class="incident-item">
                             <label><input type="checkbox" class="inc-chk" id="chk-other" value="อื่นๆ"> อุบัติการณ์อื่นๆ... ระบุ</label>
@@ -334,15 +334,16 @@
 
                 <div class="data-grid" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-control"><label>รายละเอียด Refer in 24 ชม.</label><textarea id="v-refer24-desc" class="data-field" data-label="รายละเอียด Refer 24 ชม." rows="2"></textarea></div>
-                    <div class="form-control"><label>รายละเอียด Case Refer <span id="req-ref" class="req-star" style="display:none;">*</span></label><textarea id="v-refer-desc" class="data-field" data-label="รายละเอียด Refer" rows="2"></textarea></div>
+                    <div class="form-control"><label>รายละเอียด Case Refer</label><textarea id="v-refer-desc" class="data-field" data-label="รายละเอียด Refer" rows="2"></textarea></div>
                     <div class="form-control"><label>รายละเอียด Case Dead <span id="req-dead" class="req-star" style="display:none;">*</span></label><textarea id="v-dead-desc" class="data-field" data-label="รายละเอียด Dead" rows="2"></textarea></div>
                     <div class="form-control"><label>รายละเอียด Case ประเภท 4 / วิกฤติ</label><textarea id="v-type4-desc" class="data-field" data-label="รายละเอียด Type 4" rows="2"></textarea></div>
                 </div>
 
                 <div class="section-title">💊 4. บริหารยา & หัตถการพยาบาล (Medications & Procedures)</div>
                 <div class="data-grid">
-                    <div class="form-control"><label>เปิดเส้น IV</label><input type="number" class="data-field" data-label="IV" value="0"></div>
-                    <div class="form-control"><label>สารน้ำ N/S</label><input type="number" class="data-field" data-label="N/S" value="0"></div>
+                    <div class="form-control"><label>เปิดเส้น IV , ดูแล IV</label><input type="number" class="data-field" data-label="IV" value="0"></div>
+                    <div class="form-control"><label>Obs. N/S</label><input type="number" class="data-field" data-label="N/S" value="0"></div>
+                    
                     <div class="form-control"><label>ฉีดยา IV</label><input type="number" class="data-field" data-label="ฉีดยา IV" value="0"></div>
                     <div class="form-control"><label>ฉีดยา IM</label><input type="number" class="data-field" data-label="ฉีดยา IM" value="0"></div>
                     <div class="form-control"><label>ฉีดยา SC</label><input type="number" class="data-field" data-label="ฉีดยา SC" value="0"></div>
@@ -373,8 +374,10 @@
                     <div class="form-control"><label>ใส่สาย NG</label><input type="number" class="data-field" data-label="ใส่ NG" value="0"></div>
                     <div class="form-control"><label>ทำ NG lavage</label><input type="number" class="data-field" data-label="NG lavage" value="0"></div>
                     <div class="form-control"><label>Feed อาหาร</label><input type="number" class="data-field" data-label="Feed" value="0"></div>
+                    
                     <div class="form-control"><label>Flushing</label><input type="number" class="data-field" data-label="Flushing" value="0"></div>
                     <div class="form-control"><label>สวนปัสสาวะคาสาย</label><input type="number" class="data-field" data-label="สวนปัสสาวะคาสาย" value="0"></div>
+                    
                     <div class="form-control"><label>สวนปัสสาวะทิ้ง</label><input type="number" class="data-field" data-label="สวนปัสสาวะทิ้ง" value="0"></div>
                     <div class="form-control"><label>Bladder irrigation</label><input type="number" class="data-field" data-label="Bladder irrigation" value="0"></div>
                     <div class="form-control"><label>สวนอุจจาระ</label><input type="number" class="data-field" data-label="สวนอุจจาระ" value="0"></div>
@@ -387,7 +390,7 @@
                     <div class="form-control"><label>Intubation</label><input type="number" class="data-field" data-label="Intubation" value="0"></div>
                     <div class="form-control"><label>CPR</label><input type="number" class="data-field" data-label="CPR" value="0"></div>
                     <div class="form-control"><label>Complete bed bath</label><input type="number" class="data-field" data-label="Complete bed bath" value="0"></div>
-                    <div class="form-control"><label>พลิกตะแคงตัว 2 ชม</label><input type="number" class="data-field" data-label="พลิกตะแคงตัวทุก 2 ชม" value="0"></div>
+                    <div class="form-control"><label>พลิกตัว q 2 ชม.</label><input type="number" class="data-field" data-label="พลิกตะแคงตัวทุก 2 ชม" value="0"></div>
                     <div class="form-control"><label>Palliative</label><input type="number" class="data-field" data-label="Palliative" value="0"></div>
                     <div class="form-control"><label>รายงานแพทย์</label><input type="number" class="data-field" data-label="รายงานแพทย์" value="0"></div>
                 </div>
@@ -406,8 +409,8 @@
             </div>
 
             <div style="display: flex; gap: 15px; margin-top: 20px;">
-                <button class="btn btn-primary" id="save-btn" onclick="executeSaveProcess()" style="font-size: 18px; padding: 15px 30px;"><i class="fa-solid fa-floppy-disk"></i> บันทึกเข้าระบบ & โหลด PDF</button>
-                <button class="btn btn-ghost" onclick="resetForm()"><i class="fa-solid fa-rotate-left"></i> ล้างข้อมูลใหม่</button>
+                <button class="btn btn-primary" id="save-btn" onclick="executeSaveProcess()" style="font-size: 18px; padding: 15px 30px;"><i class="fa-solid fa-floppy-disk"></i> บันทึกข้อมูล & โหลด PDF</button>
+                <button class="btn btn-ghost" onclick="resetForm()"><i class="fa-solid fa-rotate-left"></i> ล้างข้อมูลฟอร์มใหม่</button>
             </div>
         </section>
 
@@ -731,7 +734,6 @@
         function toggleRequireFields() {
             let ama = parseInt(document.getElementById('v-ama').value)||0;
             let dead = parseInt(document.getElementById('v-dead').value)||0;
-            let ref = parseInt(document.getElementById('v-ref').value)||0;
 
             const chkAma = document.getElementById('chk-ama');
             if(ama > 0 && !chkAma.checked) { chkAma.checked = true; chkAma.dispatchEvent(new Event('change')); }
@@ -739,10 +741,6 @@
             let dDesc = document.getElementById('v-dead-desc');
             document.getElementById('req-dead').style.display = dead > 0 ? 'inline' : 'none';
             if(dead > 0) dDesc.setAttribute('required', 'true'); else { dDesc.removeAttribute('required'); dDesc.classList.remove('error-input'); }
-
-            let rDesc = document.getElementById('v-refer-desc');
-            document.getElementById('req-ref').style.display = ref > 0 ? 'inline' : 'none';
-            if(ref > 0) rDesc.setAttribute('required', 'true'); else { rDesc.removeAttribute('required'); rDesc.classList.remove('error-input'); }
         }
 
         function checkTypeSum() {
@@ -769,10 +767,6 @@
             let dead = parseInt(document.getElementById('v-dead').value)||0;
             let dDesc = document.getElementById('v-dead-desc');
             if(dead > 0 && !dDesc.value.trim()) { dDesc.classList.add('error-input'); isValid = false; errText += `- มี Case Dead กรุณาระบุรายละเอียด\n`; }
-
-            let ref = parseInt(document.getElementById('v-ref').value)||0;
-            let rDesc = document.getElementById('v-refer-desc');
-            if(ref > 0 && !rDesc.value.trim()) { rDesc.classList.add('error-input'); isValid = false; errText += `- มี Case Refer กรุณาระบุรายละเอียด\n`; }
             return { isValid, errText };
         }
 
@@ -803,11 +797,7 @@
             };
 
             let idx = localDiaryStorage.findIndex(i => i.uid === logItem.uid);
-            if(idx > -1) {
-                localDiaryStorage[idx] = logItem;
-            } else {
-                localDiaryStorage.unshift(logItem);
-            }
+            if(idx > -1) { localDiaryStorage[idx] = logItem; } else { localDiaryStorage.unshift(logItem); }
             
             const shiftOrder = { "ดึก": 1, "เช้า": 2, "บ่าย": 3 };
             localDiaryStorage.sort((a, b) => {
@@ -924,12 +914,34 @@
             const r = localDiaryStorage.find(i => i.uid === uid);
             if(!r) return;
             document.getElementById('edit-id').value = r.uid;
+            
+            // 1. Clear inc-chk first
+            document.querySelectorAll('.inc-chk').forEach(c => { c.checked = false; let inp = c.closest('.incident-item').querySelector('.incident-detail-input'); inp.style.display = 'none'; inp.value = ''; inp.removeAttribute('required'); inp.classList.remove('error-input'); });
+            
+            // 2. Parse incidents from string
+            let incStr = r.datasetObj['อุบัติการณ์'] || "";
+            if(incStr && incStr !== "เหตุการณ์ทั่วไปปกติ") {
+                let parts = incStr.split(' | ');
+                parts.forEach(part => {
+                    let match = part.match(/^(.*?)(?:\s*\((.*)\))?$/);
+                    if(match) {
+                        let mainVal = match[1].trim(); let detail = match[2] ? match[2].trim() : "";
+                        let chk = Array.from(document.querySelectorAll('.inc-chk')).find(c => c.value === mainVal);
+                        if(chk) { chk.checked = true; let inp = chk.closest('.incident-item').querySelector('.incident-detail-input'); inp.style.display = 'block'; inp.setAttribute('required', 'true'); inp.value = detail; }
+                        else if (mainVal !== 'เหตุการณ์ทั่วไปปกติ') {
+                            let otherChk = document.getElementById('chk-other');
+                            if(otherChk) { otherChk.checked = true; let inp = document.getElementById('desc-other'); inp.style.display = 'block'; inp.setAttribute('required', 'true'); inp.value = (mainVal + (detail ? ` (${detail})` : "")).replace("อื่นๆ (", "").replace(")", ""); }
+                        }
+                    }
+                });
+            }
+
+            // 3. Fill normal fields
             document.querySelectorAll('.data-field').forEach(f => {
                 let lbl = f.getAttribute('data-label');
                 if(lbl && r.datasetObj[lbl] !== undefined) f.value = r.datasetObj[lbl];
             });
-            runLiveCalc(); showTab('record');
-            window.scrollTo(0,0);
+            runLiveCalc(); showTab('record'); window.scrollTo(0,0);
         }
 
         function deleteRecord(uid) {
